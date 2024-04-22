@@ -1,0 +1,181 @@
+body {
+  background-color: $offwhite;
+  min-height: 100vh;
+  overflow-y: scroll;
+  word-break: break-word;
+}
+
+html {
+  scroll-behavior: unset !important;
+}
+
+.subtle-link {
+  color: inherit;
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+svg {
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.svg-arrow-icons-blue {
+  svg {
+    fill: $blue !important;
+    width: 26.5px !important;
+    height: 26.5px !important;
+  }
+}
+.svg-arrow-icons-white {
+  svg {
+    fill: $static-white !important;
+    width: 26.5px !important;
+    height: 26.5px !important;
+  }
+}
+
+.absoluteCenter {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.rounded-card {
+  border-radius: 20px;
+}
+
+.one-edge-shadow {
+  -webkit-box-shadow: 0 8px 6px -6px $static-black;
+     -moz-box-shadow: 0 8px 6px -6px $static-black;
+          box-shadow: 0 8px 6px -6px $static-black;
+}
+
+.rounded-card-top {
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+}
+.rounded-card-bottom {
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.truncate {
+  white-space: nowrap;
+}
+
+button.disabled {
+  cursor: not-allowed;
+}
+.background-texture--gradient {
+  background: linear-gradient(to bottom right, $texture-bg-left, $texture-bg-right);
+}
+.background-texture {
+  background: url("/public/img/gray-texture.png");
+  background-repeat: repeat;
+  background-size: 100px 100px;
+}
+
+.bg-white {
+  background-color: var(--hw-white) !important;
+}
+
+.app-content {
+  min-height: 100vh;
+  padding-top: 56px;
+  padding-bottom: 56px;
+}
+
+.font-montserrat {
+  font-family: "Montserrat";
+}
+
+.bg-light-blue {
+  background: #6ab3ff;
+}
+
+.bg-dark-gray {
+  background-color: $bg-darkgray;
+}
+
+.w-60 {
+  width: 60%;
+}
+
+hr {
+  color: $darkgray;
+}
+
+.fadedTitle {
+  overflow: hidden;
+  > span {
+    display: block;
+    width: 100%;
+    background: -webkit-linear-gradient(0deg, $darkgray 90%, $white);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+input {
+  &.form-control {
+    color: $darkgray;
+    background-color: $white;
+    &:focus {
+      color: $darkgray;
+      box-shadow: none;
+      background-color: $white;
+    }
+    &::placeholder {
+      color: $gray;
+    }
+  }
+}
+textarea {
+  &.form-control {
+    &::placeholder {
+      color: $gray;
+    }
+  }
+}
+
+.full-width-img {
+  img {
+    width: 100%;
+  }
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.word-break-normal {
+  word-break: normal;
+}
+
+// Fix for tables breaking
+table {
+  word-break: normal;
+}
+
+.bg-gray {
+  background-color: #dadde6;
+}
+
+// headings
+.mini-section-heading {
+  border-bottom: 1px solid;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 1.05rem;
+}
+.disabled-link {
+  opacity: 0.5;
+  pointer-events: none;
+}

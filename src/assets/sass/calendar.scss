@@ -1,0 +1,50 @@
+.vc-day.is-not-in-month * {
+  opacity: 1 !important;
+  color: darkgray !important;
+}
+.vc-header{
+  padding-bottom: 6px !important;
+  border-bottom: 1px solid #DEDEDE !important;
+}
+.vc-weeks{
+  min-width: 100% !important;
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+  padding-top: 12px !important;
+}
+.vc-weekday {
+  font-size: 10px !important;
+}
+.vc-pane{
+  min-width: 100% !important;
+}
+.vc-day{
+  min-height: 28px !important;
+}
+.vc-title {
+  color: $darkgray !important;
+  cursor: default !important;
+}
+.vc-title:hover {
+  opacity: 1 !important;
+}
+.vc-container {
+  color: $darkgray !important;
+  background-color: $white !important;
+  border-radius: 0 !important;
+}
+.vc-arrows-container {
+  display: none !important;
+}
+.vc-popover-content-wrapper {
+  display: none !important;
+}
+.vc-day-content {
+  margin: 1px !important;
+}
+.vc-day-content:hover {
+  border-radius: 6px !important;
+}
+.vc-day-content:focus {
+  border-radius: 6px !important;
+}

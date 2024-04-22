@@ -1,0 +1,44 @@
+@import "./themes.scss";
+
+// These are the common color variables that will be changes when the dark theme is applied from root styles
+$bs-lightwhite: var(--hw-bs-lightwhite);
+$white: var(--hw-white);
+$offwhite: var(--hw-offwhite);
+$lightgray: var(--hw-lightgray);
+$gray: var(--hw-gray);
+$darkgray: var(--hw-darkgray);
+$black: var(--hw-black);
+$textdark: var(--hw-textdark);
+$primaryblue: var(--hw-primaryblue);
+
+// One of use
+$bg-darkgray: var(--hw-bg-darkgray);
+$modalMaskValue: var(--modal-mask-value);
+$texture-bg-left: var( --texture-bg-left);
+$texture-bg-right: var(--texture-bg-right);
+$bs-secondary: var(--hw-bs-secondary);
+$lightgreen: var(--hw-lightgreen);
+$lightred: var(--hw-lightred);
+$iconFilter: var(--icon-filter);
+
+// These are the static color variables that will not change when the dark theme is applied
+$static-white: #FFFFFF;
+$static-black: #000000;
+$static-gray: #3f4654;
+$static-bs-secondary: #6c757d;
+$blue: #1982ef;
+$lightblue: #80BFFF;
+$orange: #f2a000;
+$red: #e8505b;
+$green: #53af52;
+
+// One of use
+$designer-button-gray: #808080;
+
+// Sizes
+$bigDesktopWidth: 1649px;
+$desktopWidth: 1199px;
+$laptopWidth: 991px;
+$tabletWidth: 767px;
+$bigPhoneWidth: 575px;
+$smallPhoneWidth: 450px,

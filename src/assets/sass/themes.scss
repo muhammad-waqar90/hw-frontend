@@ -1,0 +1,43 @@
+:root {
+  --hw-bs-lightwhite: #f8f9fa;
+  --hw-white: #FFFFFF;
+  --hw-offwhite: #E7ECF7;
+  --hw-lightgray: #F5F7FC;
+  --hw-gray: #808080;
+  --hw-darkgray: #4D4D4D;
+  --hw-black: #000000;
+  --hw-bs-secondary: #6c757d;
+  --hw-bg-darkgray: #3F4654;
+  --hw-lightgreen: #E2F9E1;
+  --hw-lightred: #FFDADD;
+  --hw-primaryblue: #0273cb;
+
+  --texture-bg-left: #E2EEFD;
+  --texture-bg-right: #858FAB;
+
+  --modal-mask-value: 0;
+  --icon-filter: invert(0);
+  --text-dark: #3F4654;
+}
+
+:root.night-mode {
+  --hw-bs-lightwhite: #1E242F;
+  --hw-white: #000000;
+  --hw-offwhite: #1E242F;
+  --hw-lightgray: #283141;
+  --hw-gray: #F5F7FC;
+  --hw-darkgray: #E7ECF7;
+  --hw-black: #FFFFFF;
+  --hw-bs-secondary: #e8e0e0;
+  --hw-bg-darkgray: #000000;
+  --hw-lightgreen: #225021;
+  --hw-lightred: #5A2529;
+  --hw-primaryblue: #000000;
+
+  --texture-bg-left: #1E242F;
+  --texture-bg-right: #1E242F;
+
+  --modal-mask-value: 50;
+  --icon-filter: invert(1);
+  --text-dark: #E2EAFC;
+}

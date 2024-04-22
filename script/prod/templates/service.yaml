@@ -1,0 +1,314 @@
+#==================================================================================================
+# This CloudFormation template deploy dockerized application using task definition and service via
+# CodePipline.
+#
+# (c) HijazWorld, Inc 2022
+# v1.3 2022-08-01
+#==================================================================================================
+
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "This CloudFormation template deploy dockrized application using task definition and service to ECS"
+
+#--------------------------------------------------------------------------------------------
+# Parameters
+#--------------------------------------------------------------------------------------------
+Parameters:
+
+  ServiceName:
+    Type: String
+    Default: hw-frontend
+    Description: Service Name
+  ServicePath:
+    Type: String
+    Default: /
+    Description: Service Path
+  BranchName:
+    Type: String
+    Default: main
+    Description: Branch Name
+  AlbRulePriority:
+    Type: Number
+    Default: 2
+    Description: The priority for the routing rule added to the load balancer.
+                 This only applies if your have multiple services which have been
+                 assigned to different paths on the load balancer.
+  ContainerPort:
+    Type: Number
+    Default: 80
+    Description: What port number the application inside the docker container is binding to
+  AsContainersMin:
+    Type: Number
+    Default: 1
+    Description: Min mumber of tasks
+  AsContainersMax:
+    Type: Number
+    Default: 3
+    Description: Max mumber of tasks
+  AsContainersDesired:
+    Type: Number
+    Default: 1
+    Description: Desired number of tasks
+  AsTargetCpuUtilization:
+    Type: Number
+    Default: 50
+    Description: Target CPU utilization (%)
+  ContainerCpu:
+    Type: Number
+    Default: 256
+    Description: How much CPU to give the container. 1024 is 1 CPU
+  ContainerMemory:
+    Type: Number
+    Default: 512
+    Description: How much memory in megabytes to give the container
+  ClusterName:
+    Type: "AWS::SSM::Parameter::Value<String>"
+    Default: "/HW/ClusterName"
+  FargateContainerSecurityGroup:
+    Type: "AWS::SSM::Parameter::Value<String>"
+    Default: "/HW/ECSContainerSecurityGroup"
+  ECSTaskExecutionRole:
+    Type: "AWS::SSM::Parameter::Value<String>"
+    Default: "/HW/ECSTaskExecutionRole"
+  PrivateSubnet1:
+    Type: "AWS::SSM::Parameter::Value<String>"
+    Default: "/HW/PrivateSubnetOne"
+  PrivateSubnet2:
+    Type: "AWS::SSM::Parameter::Value<String>"
+    Default: "/HW/PrivateSubnetTwo"
+  VpcId:
+    Type: "AWS::SSM::Parameter::Value<String>"
+    Default: "/HW/VPCId"
+  PublicListener:
+    Type: "AWS::SSM::Parameter::Value<String>"
+    Default: "/HW/PublicListener"
+  PublicListenerEndpoint:
+    Type: "AWS::SSM::Parameter::Value<String>"
+    Default: "/HW/PublicListenerEndpoint"
+
+Resources:
+
+  TaskRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub "task-${ServiceName}-${BranchName}"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ecs-tasks.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: !Sub "${ServiceName}-${BranchName}-TaskRolePolicy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "ssmmessages:CreateControlChannel"
+                  - "ssmmessages:CreateDataChannel"
+                  - "ssmmessages:OpenControlChannel"
+                  - "ssmmessages:OpenDataChannel"
+                Resource: '*'
+
+#--------------------------------------------------------------------------------------------------------
+# ECS Task Definition
+# This is a simple metadata description of what container to run, and what resource requirements it has.
+#--------------------------------------------------------------------------------------------------------
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: !Sub "${ServiceName}-${BranchName}"
+      Cpu: !Ref ContainerCpu
+      Memory: !Ref ContainerMemory
+      NetworkMode: awsvpc
+      TaskRoleArn: !Ref TaskRole
+      RequiresCompatibilities:
+        - FARGATE
+      ExecutionRoleArn: !Ref ECSTaskExecutionRole
+      # EFSVolumeConfiguration:
+      #   - FilesystemId: "fs-0dd08ebd7494a3131"
+      #   - RootDirectory: "/var/www/html"
+      ContainerDefinitions:
+        - Name: !Sub "task-${ServiceName}-${BranchName}"
+          Cpu: !Ref 'ContainerCpu'
+          Memory: !Ref ContainerMemory
+          Image: !Sub "${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${ServiceName}-${BranchName}"
+
+          Environment:
+            - Name: VUE_APP_NAME
+              Value: "HijazWorld"                
+
+          Secrets:
+          # Getting Stripe Key secrets from AWS Secret Manager
+            - Name: VUE_APP_STRIPE_KEY
+              ValueFrom: "arn:aws:secretsmanager:us-east-1:119890996072:secret:stripe-credentials-Ggfz3H:stripekey::"
+          # Getting APP-GA-Key secret from AWS Secret Manager
+            - Name: VUE_APP_GA_KEY
+              ValueFrom: "arn:aws:secretsmanager:us-east-1:119890996072:secret:ga-key-ipOVuU:appgakey::"
+          # Getting HCAPTCHA SITE KEY secrets from AWS Secret Manager
+            - Name: VUE_APP_HCAPTCHA_SITE_KEY
+              ValueFrom: "arn:aws:secretsmanager:us-east-1:119890996072:secret:hcaptcha-credentials-VAeXdp:hcaptchasitekey::" 
+            - Name: VUE_APP_HCAPTCHA_SECRET_KEY
+              ValueFrom: "arn:aws:secretsmanager:us-east-1:119890996072:secret:hcaptcha-credentials-VAeXdp:hcaptchasecretkey::" 
+          # Getting Mix Terms and privacy from AWS Secret Manager
+            - Name: VUE_APP_TERMS_LINK
+              ValueFrom: "arn:aws:secretsmanager:us-east-1:119890996072:secret:mix-terms-privacy-50jBTf:mixterms::"
+            - Name: VUE_APP_PRIVACY_LINK
+              ValueFrom: "arn:aws:secretsmanager:us-east-1:119890996072:secret:mix-terms-privacy-50jBTf:mixprivacy::"
+          # Getting App-Api-URL from AWS Secret Manager
+            - Name: VUE_APP_API_URL
+              ValueFrom: "arn:aws:secretsmanager:us-east-1:119890996072:secret:app-api-url-xZ9uMy:apiurl::"
+          # Getting Google and Apple URLs from AWS Secret Manager
+            - Name: VUE_APP_GOOGLE_PLAY_URL
+              ValueFrom: "arn:aws:secretsmanager:us-east-1:119890996072:secret:google-apple-urls-cnx5fk:googleplay::"
+            - Name: VUE_APP_APPLE_STORE_URL
+              ValueFrom: "arn:aws:secretsmanager:us-east-1:119890996072:secret:google-apple-urls-cnx5fk:applestore::"
+          # Getting RUM Credentials from AWS Secret Manager
+            - Name: VUE_APP_AWS_RUM_ARN
+              ValueFrom: "arn:aws:secretsmanager:us-east-1:119890996072:secret:frontend-rum-KBWZ2k:arn::"
+            - Name: VUE_APP_AWS_RUM_POOL_ID
+              ValueFrom: "arn:aws:secretsmanager:us-east-1:119890996072:secret:frontend-rum-KBWZ2k:pool::"
+            - Name: VUE_APP_AWS_RUM_ENDPOINT
+              ValueFrom: "arn:aws:secretsmanager:us-east-1:119890996072:secret:frontend-rum-KBWZ2k:endpoint::"
+            - Name: VUE_APP_AWS_RUM_APPLICATION_ID
+              ValueFrom: "arn:aws:secretsmanager:us-east-1:119890996072:secret:frontend-rum-KBWZ2k:id::"
+          # Getting Current Environment from AWS Secret Manager
+            - Name: VUE_APP_ENV
+              ValueFrom: "arn:aws:secretsmanager:us-east-1:119890996072:secret:frontend-app-env-5M40Wf:appenv::"                        
+
+          PortMappings:
+            - ContainerPort: !Ref 'ContainerPort'
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-create-group: "true"
+              awslogs-region: !Sub "${AWS::Region}"
+              awslogs-group: !Sub "${ServiceName}-${BranchName}"
+              awslogs-stream-prefix: !Sub "${ServiceName}-${BranchName}"
+
+#--------------------------------------------------------------------------------------------------
+# ECS Services
+# The service is a resource which allows you to run multiple copies of a type of task, and gather
+# up their logs and metrics, as well as monitor the number of running tasks and replace any that
+# have crashed
+#--------------------------------------------------------------------------------------------------
+
+  Service:
+    Type: AWS::ECS::Service
+    DependsOn: LoadBalancerRule
+    Properties:
+      ServiceName: !Sub "${ServiceName}-${BranchName}"
+      Cluster: !Ref ClusterName
+      LaunchType: FARGATE
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 75
+      DesiredCount: !Ref AsContainersDesired
+      EnableExecuteCommand: true
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          # AssignPublicIp: ENABLED
+          SecurityGroups:
+            - !Ref FargateContainerSecurityGroup
+          Subnets:
+            - !Ref PrivateSubnet1
+            - !Ref PrivateSubnet2
+      TaskDefinition: !Ref 'TaskDefinition'
+      LoadBalancers:
+        - ContainerName: !Sub "task-${ServiceName}-${BranchName}"
+          ContainerPort: !Ref ContainerPort
+          TargetGroupArn: !Ref 'TargetGroup'
+
+#--------------------------------------------------------------------------------------------------
+# Loadbalacer Target Group
+# This target group is used for keeping track of all the tasks, and what IP addresses / port numbers
+# they have. You can query it yourself, to use the addresses yourself, but most often this target
+# group is just connected to an application load balancer, or network load balancer, so it can
+# automatically distribute traffic across all the targets.
+#--------------------------------------------------------------------------------------------------
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      HealthCheckIntervalSeconds: 6
+      HealthCheckPath: !Ref ServicePath
+      HealthCheckProtocol: HTTP
+      HealthCheckTimeoutSeconds: 5
+      HealthyThresholdCount: 2
+      Matcher:
+        HttpCode: '200-499'
+      TargetType: ip
+      Name: !Sub "${ServiceName}-${BranchName}"
+      Port: !Ref 'ContainerPort'
+      Protocol: HTTP
+      UnhealthyThresholdCount: 5
+      VpcId: !Ref VpcId
+#--------------------------------------------------------------------------------------------------
+# Load Balancer Rule
+# Create a rule on the load balancer for routing traffic to the target group
+#--------------------------------------------------------------------------------------------------
+  LoadBalancerRule:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      Actions:
+        - TargetGroupArn: !Ref 'TargetGroup'
+          Type: 'forward'
+      Conditions:
+        - Field: path-pattern
+          Values: [!Ref ServicePath]
+      ListenerArn: !Ref PublicListener
+      Priority: !Ref AlbRulePriority
+#--------------------------------------------------------------------------------------------------
+# Log Group
+#--------------------------------------------------------------------------------------------------
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "${ServiceName}-${BranchName}"
+
+  AutoScalingTarget:
+    DependsOn: Service
+    Type: AWS::ApplicationAutoScaling::ScalableTarget
+    Properties:
+      MinCapacity: !Ref AsContainersMin
+      MaxCapacity: !Ref AsContainersMax
+      ResourceId: !Sub "service/${ClusterName}/${ServiceName}-${BranchName}"
+      ScalableDimension: ecs:service:DesiredCount
+      ServiceNamespace: ecs
+      # "The Amazon Resource Name (ARN) of an AWS Identity and Access Management (IAM) role that allows Application Auto Scaling to modify your scalable target."
+      RoleARN: !GetAtt AutoScalingRole.Arn
+
+#--------------------------------------------------------------------------------------------------
+# Auto Scaling Group policy to handle load and mange traffic
+#--------------------------------------------------------------------------------------------------
+  AutoScalingPolicy:
+    Type: AWS::ApplicationAutoScaling::ScalingPolicy
+    Properties:
+      PolicyName: !Sub "${ServiceName}-${BranchName}-AutoScalingPolicy"
+      PolicyType: TargetTrackingScaling
+      ScalingTargetId: !Ref AutoScalingTarget
+      TargetTrackingScalingPolicyConfiguration:
+        PredefinedMetricSpecification:
+          PredefinedMetricType: ECSServiceAverageCPUUtilization
+        ScaleInCooldown: 10
+        ScaleOutCooldown: 10
+        # Keep things at or lower than 50% CPU utilization, for example
+        TargetValue: !Ref AsTargetCpuUtilization
+
+#--------------------------------------------------------------------------------------------------
+# Auto Scaling IAM Role for specific permissions
+#--------------------------------------------------------------------------------------------------
+  AutoScalingRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+            Action: 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceAutoscaleRole'

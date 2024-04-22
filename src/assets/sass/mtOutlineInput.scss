@@ -1,0 +1,64 @@
+@import "@/assets/sass/variables.scss";
+
+.container-mt-outline-input {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .material-textfield {
+    position: relative;
+    width: 100%;
+  }
+
+  label {
+    position: absolute;
+    font-size: 1rem;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: $offwhite;
+    color: #8F99AC;
+    padding: 0 0.3rem;
+    margin: 0 0.5rem;
+    transition: .1s ease-out;
+    transform-origin: left top;
+    pointer-events: none;
+    font-weight: 600;
+  }
+  input {
+    width: 100%;
+    font-size: 1rem;
+    outline: none;
+    border: 2px solid transparent;
+    border-radius: 50px;
+    padding: 0.5rem 0.7rem;
+    color: $darkgray;
+    background-color: $offwhite;
+    transition: 0.1s ease-out;
+    font-weight: 600;
+  }
+  input:focus {
+    border-color: $blue;
+    background-color: transparent;
+  }
+  input:focus + label {
+    background-color: $white;
+    color: $blue;
+    top: 0;
+    transform: translateY(-50%) translateX(20px) scale(.9);
+    font-weight: 500;
+  }
+  input:not(:placeholder-shown) + label {
+    background-color: $white;
+    top: 0;
+    transform: translateY(-50%) translateX(20px) scale(.9);
+  }
+
+  input:not(:placeholder-shown, :focus) + label {
+    color: transparent;
+    background-color: transparent;
+    top: 0;
+    transform: translateY(-50%) translateX(20px) scale(.9);
+  }
+}

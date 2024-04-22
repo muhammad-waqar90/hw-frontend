@@ -1,0 +1,50 @@
+.text-black {
+  color: $black !important;
+}
+.text-white {
+  color: $static-white !important;
+}
+.text-secondary {
+  color: $bs-secondary !important;
+}
+.text-light {
+  color: $bs-lightwhite !important;
+}
+//Todo: NEED REFACTOR
+.color-gray {
+  color: $darkgray;
+}
+
+.text-light-gray {
+  color: $gray;
+}
+
+.text-dark-gray {
+  color: $darkgray;
+}
+
+.input-text-color {
+  color: $darkgray;
+}
+
+.text-dark {
+  color: $darkgray !important;
+}
+//
+
+.text-blue {
+  color: $blue;
+}
+.text-green {
+  color: $green;
+}
+.text-orange {
+  color: $orange;
+}
+.text-red {
+  color: $red;
+}
+
+.text-grayed-out {
+  opacity: 0.4;
+}

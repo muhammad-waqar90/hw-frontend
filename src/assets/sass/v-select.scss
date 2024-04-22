@@ -1,0 +1,21 @@
+.v-select-color {
+  .vs__dropdown-toggle {
+    background: $lightgray !important;
+  }
+  .vs__dropdown-menu {
+    background-color: $lightgray;
+    color: $darkgray;
+    li {
+      color: $darkgray;
+    }
+  }
+  .vs__selected {
+    color: $darkgray;
+  }
+  .vs__open-indicator {
+    fill: $darkgray;
+  }
+  .vs__clear {
+    fill: $darkgray;
+  }
+}

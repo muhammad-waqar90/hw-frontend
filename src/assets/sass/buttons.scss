@@ -1,0 +1,114 @@
+%base-custom-btn {
+  @extend .shadow-none;
+}
+
+
+.blue-btn {
+  @extend %base-custom-btn;
+  @include button-variant($blue, $blue);
+  color: $static-white !important;
+}
+
+.blue-border-btn {
+  @extend %base-custom-btn;
+  @include button-variant(#FFFFFF, $blue);
+  color: $blue !important;
+  border-width: 2px;
+}
+
+.green-btn {
+  @extend %base-custom-btn;
+  @include button-variant($green, $green);
+  color: $static-white !important;
+}
+
+.orange-btn {
+  @extend %base-custom-btn;
+  @include button-variant($orange, $orange);
+  color: $static-white !important;
+}
+
+.red-btn {
+  @extend %base-custom-btn;
+  @include button-variant($red, $red);
+  color: $static-white !important;
+}
+
+.gray-btn {
+  @extend %base-custom-btn;
+  @include button-variant($designer-button-gray, $designer-button-gray);
+  color: $static-white !important;
+}
+
+.light-gray-btn {
+  @extend %base-custom-btn;
+  @include button-variant(#BDC7D6, #BDC7D6);
+  color: $static-white !important;
+}
+
+.gray-btn-text {
+  @extend %base-custom-btn;
+  @include button-variant(#CCD0DB, #CCD0DB);
+  color: $gray !important;
+}
+
+.gray-btn-text--dark {
+  @extend %base-custom-btn;
+  @include button-variant(#282F39, #282F39);
+  color: $designer-button-gray !important;
+}
+
+.white-btn {
+  @extend %base-custom-btn;
+  @include button-variant(#FFFFFF, #FFFFFF);
+  color: $blue !important;
+}
+
+.white-btn-orange-text {
+  @extend %base-custom-btn;
+  @include button-variant(#FFFFFF, #FFFFFF);
+  color: $orange !important;
+}
+
+.white-btn-green-text {
+  @extend %base-custom-btn;
+  @include button-variant(#FFFFFF, #FFFFFF);
+  color: $green !important;
+}
+
+.white-btn-blue-text {
+  @extend %base-custom-btn;
+  @include button-variant(#FFFFFF, #FFFFFF);
+  color: $blue !important;
+}
+
+.white-btn-hollow {
+  @extend %base-custom-btn;
+  @include button-variant(rgba($color: #FFFFFF, $alpha: 0.0), #FFFFFF);
+  color: $static-white !important;
+  border-width: 2px;
+}
+
+.black-btn {
+  @extend %base-custom-btn;
+  @include button-variant(#131619, #131619);
+  color: $blue !important;
+}
+
+.red-cross-btn {
+  @extend %base-custom-btn;
+  cursor: pointer;
+  border-radius: 12px;
+    svg {
+      padding: 2px;
+      fill: $static-white;
+      width: 28px;
+      height: 28px;
+      background-color: $red;
+      border-radius: 10px;
+    }
+}
+.btn-light {
+  color: $static-black;
+  background-color: $static-white;
+}

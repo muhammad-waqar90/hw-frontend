@@ -1,0 +1,30 @@
+@import "@/assets/sass/_variables.scss";
+
+.navigation-button {
+  width: 40px;
+  height: 40px;
+  font-weight: 600;
+  .bell {
+    line-height: 1;
+  }
+  div {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    left: 0;
+  }
+}
+
+.count {
+  position: absolute;
+  right: -10px;
+  top: 0;
+  font-size: 11px;
+  background: $white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

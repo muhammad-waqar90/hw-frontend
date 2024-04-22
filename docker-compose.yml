@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  #Frontend (Vue.js)
+  frontend:
+    build:
+      context: .
+      dockerfile: ./script/local/Dockerfile
+    container_name: hw-frontend
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3000:3000"
+    environment:
+      SERVICE_NAME: frontend
+      SERVICE_TAGS: dev
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge

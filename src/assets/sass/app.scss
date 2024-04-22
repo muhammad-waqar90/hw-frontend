@@ -1,0 +1,56 @@
+// Bootstrap
+@import "bootstrap";
+
+/*! purgecss start ignore */
+
+
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Nunito");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:200,400,600,700,800&display=swap");
+
+// Variables
+@import "variables";
+
+// Global
+@import "global";
+
+// Toast
+@import "~vue-toast-notification/dist/theme-sugar";
+
+// Arrow Buttons
+@import "arrowButtons";
+
+// Animations
+@import "animations";
+
+// Scrollbar
+@import "scrollbar";
+
+// Font Weight
+@import "fontWeight";
+
+// Calendar
+@import "calendar";
+
+// Toast
+@import "toast";
+
+// Svg
+@import "svg";
+
+// Buttons
+@import "buttons";
+
+// Text
+@import "text";
+
+// Effects
+@import "effects";
+
+// V-Select Style
+@import "v-select";
+
+// Material Outline Input Field
+@import "mtOutlineInput";
+
+/*! purgecss end ignore */
