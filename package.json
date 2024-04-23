@@ -15,7 +15,7 @@
     "@vime/vue": "^5.0.27",
     "@vue-stripe/vue-stripe": "^4.1.8",
     "aws-rum-web": "^1.15.0",
-    "axios": "^0.21.1",
+    "axios": "^0.28.1",
     "axios-auth-refresh": "^3.1.0",
     "bootstrap": "^5.1.3",
     "core-js": "^3.8.3",
