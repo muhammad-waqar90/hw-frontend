@@ -33,7 +33,7 @@
         <span class="text-danger h6">
           <i>
             Note: Changes will be reflected on user side as well. Level name can
-            have min: 5 and max: 50 characters.</i
+            have min: 5 and max: 15 characters.</i
           >
         </span>
       </div>
@@ -111,7 +111,7 @@ export default {
       this.modalMode = "edit";
     },
     onNameChange(name) {
-      this.isValidated = name.length >= 5 && name.length <= 50;
+      this.isValidated = name.length >= 5 && name.length <= 15;
     },
     async createLevel() {
       this.isSubmitting = true;

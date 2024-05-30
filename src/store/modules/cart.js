@@ -44,7 +44,7 @@ const getters = {
             const discountPercentage = userModule.state.discountPercentage;
             const itemPrice = item.code ? item.discountedPrice : item.price;
             let discountedItemPrice = null;
-            if (item.is_discounted) {
+            if (item.is_discounted && !item.code) {
               discountedItemPrice =
                 itemPrice - (itemPrice * discountPercentage) / 100;
             } else {

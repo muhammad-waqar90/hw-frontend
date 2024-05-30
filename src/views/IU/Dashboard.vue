@@ -43,7 +43,7 @@
     <!-- End modal for lecture notes access -->
 
     <ComingSoonCourses
-      class="mb-4"
+      class="mb-1"
       :courses="comingSoonCourses"
       :loading="loading"
     />

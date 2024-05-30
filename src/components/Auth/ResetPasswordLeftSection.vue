@@ -2,7 +2,10 @@
   <div
     class="resetPasswordLeftSection py-2 py-md-5 d-flex flex-column justify-content-center"
   >
-    <header class="pt-3 pt-md-5 pb-2">
+    <header
+      class="pt-3 pt-md-5 pb-2"
+      :class="{ 'reset-password-tablet': $isTablet }"
+    >
       <span class="h2 text-dark-gray">
         {{ $t("auth.forgotPassword") }}
       </span>
@@ -54,10 +57,11 @@ import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import toastMixin from "@/mixins/toastMixin";
 import dompurifyMixin from "@/mixins/dompurifyMixin";
+import devicesMixin from "@/mixins/Misc/devicesMixin";
 export default {
   name: "ResetPasswordLeftSection",
   components: { ButtonWithLoading },
-  mixins: [validationMixin, toastMixin, dompurifyMixin],
+  mixins: [validationMixin, toastMixin, dompurifyMixin, devicesMixin],
   props: {
     loading: {
       type: Boolean,
@@ -122,5 +126,8 @@ export default {
       width: 100%;
     }
   }
+}
+.reset-password-tablet {
+  text-align: left !important;
 }
 </style>

@@ -8,8 +8,11 @@
           @onChangeFilter="changeFilter"
         />
       </div>
-      <div class="main-container-width" :class="{ 'w-100 ': $isPhone }">
-        <div class="rounded-card bg-white py-4 px-5">
+      <div
+        class="main-container-width"
+        :class="{ 'w-100': $isPhone, 'main-container-width-tablet': $isTablet }"
+      >
+        <div class="rounded-card bg-white py-4 px-lg-5 px-md-2">
           <div class="d-flex justify-content-center align-items-center">
             <div class="arrow-container cursor-pointer">
               <ChevronLeft
@@ -98,7 +101,7 @@
       </div>
       <div
         class="side-container-width d-flex flex-column"
-        :class="{ 'w-100 ': $isPhone }"
+        :class="{ 'w-100': $isPhone, 'side-container-width-tablet': $isTablet }"
       >
         <EventFilter
           v-if="!$isPhone"
@@ -310,5 +313,11 @@ export default {
 .selected-day {
   border-color: $blue;
   border-width: 2px;
+}
+.main-container-width-tablet {
+  width: 60%;
+}
+.side-container-width-tablet {
+  width: 40%;
 }
 </style>

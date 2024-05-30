@@ -1,10 +1,19 @@
 import http from "../instance";
 import { handleHttpError } from "../httpHelpers";
 
-export function getLessonEbook(courseId, levelId, courseModuleId, lessonId) {
+export function getLessonEbook(
+  courseId,
+  levelId,
+  courseModuleId,
+  lessonId,
+  withSrc
+) {
+  const params = { with_src: withSrc };
+
   return http
     .get(
-      `af/courses/${courseId}/levels/${levelId}/modules/${courseModuleId}/lessons/${lessonId}/ebook`
+      `af/courses/${courseId}/levels/${levelId}/modules/${courseModuleId}/lessons/${lessonId}/ebook`,
+      { params }
     )
     .then((res) => {
       return res.data;

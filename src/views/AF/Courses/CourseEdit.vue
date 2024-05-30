@@ -1,10 +1,12 @@
 <template>
   <section class="container-fluid">
     <article class="w-100">
-      <div class="d-flex justify-content-between py-4">
-        <h3>Course ({{ course.name }}) - Edit</h3>
-        <div class="d-flex">
-          <div class="pt-2 me-2">
+      <div class="row py-4">
+        <div class="col-md-9">
+          <h3>Course ({{ course.name }}) - Edit</h3>
+        </div>
+        <div class="col-md-3">
+          <div class="me-2">
             <h5>
               Enrolled Users: <b> {{ courseHasUsersEnrolled }} </b>
             </h5>

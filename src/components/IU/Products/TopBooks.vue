@@ -4,9 +4,13 @@
       <h4 class="text-dark-gray font-weight-600 mb-0 px-3 px-md-4">
         {{ $t("iu.webShop.topBooks") }}
       </h4>
-      <router-link v-if="books?.length" :to="{ name: 'iu-products-top' }">
+      <router-link
+        v-if="books?.length"
+        class="height-25"
+        :to="{ name: 'iu-products-top' }"
+      >
         <button
-          class="btn blue-btn btn-font font-weight-600 rounded-card h-100 px-3 py-0 mx-4"
+          class="btn blue-btn btn-font font-weight-600 rounded-card h-100 px-3 py-0 mx-4 word-break-normal"
         >
           ALL
         </button>
@@ -14,11 +18,12 @@
     </div>
     <section class="position-relative pt-md-2 pb-2 py-2">
       <div v-if="loading" class="px-3">
-        <LoadingAvailableBooks :number-of-items="$isMobile ? 1 : 3" />
+        <LoadingProduct />
       </div>
       <Carousel
         v-else-if="books && books.length"
-        :items="$isMobile ? 1 : 3"
+        :key="itemsCount"
+        :items="itemsCount"
         :stage-padding="25"
         :dots="false"
         :nav="false"
@@ -35,7 +40,7 @@
           <ProductCard type="default" :book="book" @add-to-cart="addToCart" />
         </div>
         <template slot="next">
-          <div v-if="books.length > 3" class="nav-btn shadow-sm next">
+          <div v-if="books.length > itemsCount" class="nav-btn shadow-sm next">
             <ChevronRightIcon :size="35" />
           </div>
         </template>
@@ -58,7 +63,7 @@ import ProductCard from "@/components/IU/Products/ProductCard.vue";
 import Carousel from "vue-owl-carousel";
 import ChevronRightIcon from "vue-material-design-icons/ChevronRight";
 import ChevronLeftIcon from "vue-material-design-icons/ChevronLeft";
-import LoadingAvailableBooks from "@/components/IU/Products/LoadingAvailableBooks";
+import LoadingProduct from "@/components/IU/Products/LoadingProduct";
 import devicesMixin from "@/mixins/Misc/devicesMixin";
 
 export default {
@@ -69,7 +74,7 @@ export default {
     Carousel,
     ChevronRightIcon,
     ChevronLeftIcon,
-    LoadingAvailableBooks,
+    LoadingProduct,
   },
 
   mixins: [devicesMixin],
@@ -79,6 +84,11 @@ export default {
     },
     loading: {
       type: Boolean,
+    },
+  },
+  computed: {
+    itemsCount() {
+      return this.$isPhone ? 1 : this.$isTablet ? 2 : 3;
     },
   },
   methods: {

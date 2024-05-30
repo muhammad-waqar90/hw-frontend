@@ -2,8 +2,7 @@
   <div
     class="overflow-hidden position-relative pb-lg-0 faq-dashboard"
     :class="{
-      'full-height': mode != availableModes.INITIAL,
-      'small-height pb-1': $isPhone && mode != availableModes.INITIAL,
+      'pb-1': $isPhone && mode != availableModes.INITIAL,
     }"
   >
     <div
@@ -41,7 +40,7 @@
         </router-link>
       </div>
     </div>
-    <div class="row mt-3">
+    <div class="row mt-3 faq-dashboard-body">
       <div
         class="col-12 col-md-4 search-root-categories d-flex"
         :class="{
@@ -240,12 +239,10 @@ export default {
 
 .faq-dashboard {
   padding-bottom: 4px !important;
+  min-height: 100vh;
 }
-.full-height {
-  height: calc(100vh - 145px);
-}
-.small-height {
-  height: calc(100vh - 126px);
+.faq-dashboard-body {
+  min-height: 100vh;
 }
 
 .contact-support {
@@ -259,6 +256,7 @@ export default {
     transition: transition, 0.3s ease-in-out;
     &.search-root-categories--inactive {
       transform: translateX(-100vw);
+      position: absolute;
     }
   }
 
@@ -268,7 +266,7 @@ export default {
     left: 0;
     transform: translateX(100vw);
     transition: transition, 0.3s ease-in-out;
-    height: calc(100vh - 145px);
+    min-height: calc(100vh - 145px);
     padding-left: 0px;
     padding-right: 0px;
     &.faq-results-outer--active {

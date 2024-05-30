@@ -3,11 +3,8 @@
     <template v-if="ticket && !ticketNotFound">
       <div class="row">
         <div
-          class="col-12 col-lg-7 text-center text-lg-start position-relative"
+          class="col-12 col-md-6 text-center text-md-start position-relative"
         >
-          <h4 class="mb-0 px-4 px-lg-0 o color-gray">
-            {{ ticket.subject }}
-          </h4>
           <div v-if="$isMobile" class="arrow-outer">
             <ChevronLeftCircle
               class="cursor-pointer"
@@ -16,8 +13,17 @@
               @click="onBack"
             />
           </div>
+          <h4
+            class="px-lg-0 color-gray mt-lg-0"
+            :class="$isMobile && !$isPhone ? 'mt-5' : 'px-4'"
+          >
+            {{ ticket.subject }}
+          </h4>
         </div>
-        <div class="col-12 col-lg-5 text-center text-lg-end mt-3 mt-lg-0">
+        <div
+          class="col-12 col-md-6 text-center text-md-end mt-lg-0"
+          :class="$isMobile && !$isPhone ? 'pt-5' : 'mt-3'"
+        >
           <span
             v-if="ticket.ticket_status_id != availableStatuses.RESOLVED"
             class="rounded-pill ticket-resolved-button text-white px-4 cursor-pointer truncate py-2 py-lg-1 d-inline-block"
@@ -61,7 +67,7 @@
         <div class="bg-gray full-rounded p-4 mb-4">
           <svg-support-bubble class="icon-size" />
         </div>
-        <h4 class="px-5">
+        <h4 :class="$isTablet ? 'px-1' : 'px-5'">
           {{ $t("iu.ticket.noTicketsFound") }}
         </h4>
         <div v-if="$isMobile && selectedTicketId" class="arrow-outer p-3">
@@ -246,17 +252,7 @@ function initialState() {
   background: $orange;
 }
 .ticket-messages-outer {
-  height: calc(var(--vh, 1vh) * 100 - 410px);
-}
-@media (min-width: $smallPhoneWidth) and (max-width: $laptopWidth) {
-  .ticket-messages-outer {
-    height: calc(var(--vh, 1vh) * 100 - 372px);
-  }
-  .arrow-outer {
-    position: absolute;
-    top: 2px;
-    left: 15px;
-  }
+  height: calc(var(--vh, 1vh) * 100 - 340px);
 }
 .no-tickets-found {
   color: $gray;
@@ -270,6 +266,17 @@ function initialState() {
 .icon-size {
   width: 84.899px;
   height: 84.783px;
+}
+@media (min-width: $smallPhoneWidth) and (max-width: $laptopWidth) {
+  .ticket-messages-outer {
+    height: calc(var(--vh, 1vh) * 100 - 450px);
+    min-height: 300px;
+  }
+  .arrow-outer {
+    position: absolute;
+    top: 2px;
+    left: 15px;
+  }
 }
 @media (max-width: $smallPhoneWidth) {
   .ticket-messages-outer {

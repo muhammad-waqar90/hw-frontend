@@ -5,7 +5,11 @@
         <div
           v-click-outside="onClickOutside"
           class="modal-container"
-          :class="[{ wide: isWide }]"
+          :class="{
+            'mob-modal-container': $isPhone,
+            'tab-modal-container': $isTablet,
+            'wide-modal': isWide,
+          }"
         >
           <div class="position-relative">
             <close
@@ -38,6 +42,7 @@
 
 <script>
 import Close from "vue-material-design-icons/Close";
+import devicesMixin from "@/mixins/Misc/devicesMixin";
 export default {
   components: {
     Close,
@@ -76,6 +81,7 @@ export default {
       default: false,
     },
   },
+  mixins: [devicesMixin],
   data() {
     return {
       rendered: false,
@@ -199,7 +205,15 @@ export default {
   }
 }
 
-.wide {
+.wide-modal {
   width: 70%;
+}
+
+.mob-modal-container {
+  width: 80% !important;
+}
+
+.tab-modal-container {
+  width: 75% !important;
 }
 </style>

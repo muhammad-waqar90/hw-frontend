@@ -103,7 +103,14 @@
                 v-else-if="!$v.selectedFile.isFileValid"
                 class="form-text text-danger error"
               >
-                {{ errors.invalidFileSize }}
+                {{ errors.file.size }}
+                {{ maxFileSize.product }}MB
+              </small>
+              <small
+                v-else-if="!$v.selectedFile.isAspectRatioValid"
+                class="form-text text-danger error"
+              >
+                {{ errors.file.aspectRatio }}
               </small>
             </template>
           </div>
@@ -159,8 +166,11 @@ import GeneralCkEditor from "@/components/Misc/GeneralCkEditor";
 import dompurifyMixin from "@/mixins/dompurifyMixin";
 import Modal from "@/components/Misc/Admin/AdminModal.vue";
 import ConfirmationButtonsWithInput from "@/components/Misc/Admin/ConfirmationButtonsWithInput.vue";
-import { validateFileSize } from "@/utils/validationUtils.js";
-import { MAX_FILE_SIZE } from "@/dataObject/AF/fileSizeData.js";
+import {
+  validateFileAspectRatio,
+  validateFileSize,
+} from "@/utils/validationUtils.js";
+import { MAX_FILE_SIZE as maxFileSize } from "@/dataObject/AF/fileSizeData.js";
 import { errors } from "@/dataObject/AF/afStaticTextsData.js";
 
 export default {
@@ -221,7 +231,17 @@ export default {
         isFileValid: (value) => {
           if (value == null && this.imgPreview && this.mode === "edit")
             return true;
-          return validateFileSize(value, MAX_FILE_SIZE.product);
+          return validateFileSize(value, maxFileSize.product);
+        },
+        isAspectRatioValid: (value) => {
+          if (value == null && this.imgPreview && this.mode === "edit")
+            return true;
+          return (
+            value != null &&
+            validateFileAspectRatio(value).then((result) => {
+              return !!result.isValidDimensions;
+            })
+          );
         },
       },
     };
@@ -259,6 +279,7 @@ export default {
       submitting: false, // TODO: typo isSubmitting
       isAvailable: 1,
       errors,
+      maxFileSize,
     };
   },
   computed: {
@@ -328,9 +349,11 @@ export default {
       }
     },
     storeFileTemp(e) {
-      this.selectedFile = e.target.files[0];
+      if (!e.target?.files[0]) return;
+
+      this.selectedFile = e.target?.files[0];
       this.$v.selectedFile.$touch();
-      if (this.$v.selectedFile.$invalid) return (this.imgPreview = null);
+      // if (this.$v.selectedFile.$invalid) return (this.imgPreview = null); // we need this for image preview
       this.$emit("on-change", "selectedFile", this.selectedFile);
       if (this.selectedFile) {
         this.imgPreview = URL.createObjectURL(this.selectedFile);

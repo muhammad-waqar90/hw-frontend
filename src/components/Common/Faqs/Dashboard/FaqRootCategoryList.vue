@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-card w-100 py-4 bg-white text-dark-gray px-4">
+  <div class="rounded-card w-100 py-4 bg-white text-dark-gray px-4 h-100">
     <div>
       <h4 class="color-gray">
         {{ $t("iu.faqs.faqCategories") }}
@@ -89,18 +89,8 @@ export default {
   font-weight: 600;
   color: $gray;
 }
-
-@media (min-width: $tabletWidth) {
-  .category-list {
-    overflow-y: auto;
-    max-height: calc(100vh - 377px);
-  }
-}
-
-@media (min-width: $laptopWidth) {
-  .category-list {
-    overflow-y: auto;
-    max-height: calc(100vh - 350px);
-  }
+.category-list {
+  overflow-y: auto;
+  max-height: calc(100vh - 115px);
 }
 </style>

@@ -45,8 +45,8 @@
     <div class="logoHolder w-100">
       <div class="d-flex justify-content-center my-2 my-md-4">
         <img
-          class="logo"
-          :src="darkMode ? '/img/dark-logo.png' : '/img/logo.png'"
+          class="logo bg-static-white rounded-card px-3 py-2"
+          :src="'/img/logo.png'"
           alt=""
         />
       </div>
@@ -66,17 +66,8 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   name: "PageNotFoundSection",
-  computed: {
-    darkMode() {
-      return this.theme == "night-mode" ? true : false;
-    },
-    ...mapGetters({
-      theme: "theme/getThemeMode",
-    }),
-  },
 };
 </script>
 

@@ -6,16 +6,17 @@
       </h4>
       <router-link
         :to="{ name: 'iu-courses-enrolled' }"
+        class="height-25"
         :class="{ 'disabled-link': !courses?.length }"
       >
         <button
-          class="btn blue-btn btn-font font-weight-600 rounded-card h-100 px-3 py-0 mx-4"
+          class="btn blue-btn btn-font font-weight-600 rounded-card h-100 px-3 py-0 mx-4 word-break-normal"
         >
           ALL
         </button>
       </router-link>
     </div>
-    <section class="position-relative pt-md-2 pb-2" :key="$isPhone">
+    <section class="position-relative pt-md-2 pb-2" :key="itemsCount">
       <div v-if="loading">
         <LoadingCourse />
       </div>
@@ -91,7 +92,7 @@ export default {
   },
   computed: {
     itemsCount() {
-      return this.$isPhone ? 1 : 2;
+      return this.$isPhone ? 1 : this.$isTablet ? 1.5 : 2;
     },
   },
 };

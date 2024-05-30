@@ -7,7 +7,7 @@
       @add-to-cart="onAddToCart"
     />
     <AvailableBooks
-      class="mb-4"
+      class="mb-1"
       :books="availableBooksApi.data"
       :loading="availableBooksApi.loading"
       @add-to-cart="onAddToCart"

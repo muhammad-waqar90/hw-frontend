@@ -2,7 +2,10 @@
   <div
     class="forgotUsernameLeftSection py-2 py-md-5 d-flex flex-column justify-content-center"
   >
-    <header class="pt-3 pt-md-5 pb-2">
+    <header
+      class="pt-3 pt-md-5 pb-2"
+      :class="{ 'forgot-username-tablet': $isTablet }"
+    >
       <span class="h2 text-dark-gray">
         {{ $t("auth.forgotUsername") }}
       </span>
@@ -53,9 +56,10 @@
 import ButtonWithLoading from "@/components/Misc/Buttons/ButtonWithLoading";
 import { validationMixin } from "vuelidate";
 import { email, required } from "vuelidate/lib/validators";
+import devicesMixin from "@/mixins/Misc/devicesMixin";
 export default {
   name: "ForgotUsernameLeftSection",
-  mixins: [validationMixin],
+  mixins: [validationMixin, devicesMixin],
   components: { ButtonWithLoading },
   props: {
     loading: {
@@ -111,5 +115,8 @@ export default {
       width: 100%;
     }
   }
+}
+.forgot-username-tablet {
+  text-align: left !important;
 }
 </style>

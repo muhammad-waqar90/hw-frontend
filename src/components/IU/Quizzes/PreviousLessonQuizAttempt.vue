@@ -52,6 +52,7 @@
     <div class="d-flex justify-content-center flex-column flex-md-row mt-3">
       <button
         class="btn btn-font px-5 py-1 my-2 my-lg-0 mx-2 blue-border-btn rounded-pill font-weight-500 text-uppercase"
+        :class="{ 'instruction-btn-tab': $isTablet }"
         @click="$emit('toggle-mode')"
       >
         {{ $t("iu.quiz.instructionsBtn") }}
@@ -60,6 +61,7 @@
       <button
         v-if="!previousAttempt.has_passed"
         class="btn btn-font px-5 py-1 my-2 my-lg-0 mx-2 blue-btn rounded-pill font-weight-500 text-uppercase"
+        :class="{ 'instruction-btn-tab': $isTablet }"
         @click="$emit('take-quiz')"
       >
         {{ $t("iu.quiz.retake") }}
@@ -72,6 +74,7 @@
           nextLesson.published == 1
         "
         class="btn btn-font px-5 py-1 my-2 my-lg-0 mx-2 blue-btn rounded-pill font-weight-500 text-uppercase"
+        :class="{ 'instruction-btn-tab': $isTablet }"
         @click="handleLessonChange"
       >
         {{ $t("iu.quiz.nextLessonBtn") }}
@@ -79,6 +82,7 @@
       <button
         v-if="previousAttempt.has_passed && isExamReady && hasModuleExam"
         class="btn btn-font px-5 py-1 my-2 my-lg-0 mx-2 blue-btn rounded-pill font-weight-500 text-uppercase"
+        :class="{ 'instruction-btn-tab': $isTablet }"
         @click="$emit('handle-exam-start')"
       >
         {{ $t("iu.quiz.takeModuleExam") }}
@@ -344,7 +348,9 @@ hr {
   bottom: -50px;
 }
 .tab-ebook-notification {
+  position: absolute;
   width: 90%;
+  bottom: -54px;
 }
 .mob-ebook-notification {
   width: auto;
@@ -362,5 +368,8 @@ hr {
 .mob-divider {
   color: $gray;
   opacity: 0.4;
+}
+.instruction-btn-tab {
+  white-space: nowrap;
 }
 </style>

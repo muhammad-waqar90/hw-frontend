@@ -22,6 +22,7 @@
     />
 
     <ComingSoonCourses
+      class="mb-1"
       :courses="comingSoonCoursesApi.data"
       :loading="comingSoonCoursesApi.loading"
     />

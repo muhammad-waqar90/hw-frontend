@@ -60,7 +60,10 @@ export default {
 
   methods: {
     handleImage(e) {
-      this.image = e.target.files[0];
+      const selectedImage = e.target.files[0];
+      if (!selectedImage) return;
+
+      this.image = selectedImage;
       if (this.image) {
         this.imgPreview = URL.createObjectURL(this.image);
       }

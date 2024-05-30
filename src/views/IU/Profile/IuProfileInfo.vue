@@ -1,5 +1,5 @@
 <template>
-  <div class="container font-montserrat px-3">
+  <div class="container font-montserrat" :class="$isPhone ? 'px-0' : 'px-3'">
     <div class="row">
       <div v-if="$v.profile" class="col">
         <div class="bg-white rounded-card">
@@ -76,12 +76,11 @@ import ButtonWithLoading from "@/components/Misc/Buttons/ButtonWithLoading";
 import BasicInfo from "@/components/IU/Profile/BasicInfo";
 import ContactInfo from "@/components/IU/Profile/ContactInfo";
 import LoadingProfile from "@/components/IU/Profile/LoadingProfile";
-
+import devicesMixin from "@/mixins/Misc/devicesMixin";
 import toastMixin from "@/mixins/toastMixin";
 import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import dompurifyMixin from "@/mixins/dompurifyMixin";
-
 import { getProfileService, updateProfileService } from "@/services/iuService";
 
 export default {
@@ -107,7 +106,7 @@ export default {
     //   ),
   },
 
-  mixins: [toastMixin, validationMixin, dompurifyMixin],
+  mixins: [toastMixin, validationMixin, dompurifyMixin, devicesMixin],
   beforeRouteLeave(to, from, next) {
     if (this.dataChanged)
       if (!window.confirm(this.$t("iu.profile.areYouSure"))) {

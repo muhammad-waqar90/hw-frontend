@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.hijazworld",
+      "sha256_cert_fingerprints": [
+        "91:AE:A5:69:A0:67:2B:BB:A5:9B:A2:44:48:AE:A2:26:FB:4B:DB:13:7E:12:8E:49:66:AC:16:F1:CB:E5:33:E7"
+      ]
+    }
+  }
+]

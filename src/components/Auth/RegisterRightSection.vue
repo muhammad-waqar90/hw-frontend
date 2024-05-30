@@ -51,7 +51,7 @@
         </div>
         <div
           class="d-flex flex-column col-12 col-sm-6 my-2"
-          :class="{ 'py-2': $isPhone }"
+          :class="{ 'py-2': $isPhone, 'input-field-tablet': $isTablet }"
         >
           <div class="container-mt-outline-input">
             <div class="material-textfield">
@@ -122,7 +122,7 @@
         </div>
         <div
           class="d-flex flex-column col-12 col-sm-6 my-2"
-          :class="{ 'py-2': $isPhone }"
+          :class="{ 'py-2': $isPhone, 'input-field-tablet': $isTablet }"
         >
           <div class="container-mt-outline-input">
             <div class="material-textfield">
@@ -214,7 +214,7 @@
         </div>
         <div
           class="d-flex flex-column col-12 col-sm-6 my-2"
-          :class="{ 'py-2': $isPhone }"
+          :class="{ 'py-2': $isPhone, 'input-field-tablet': $isTablet }"
         >
           <div class="container-mt-outline-input">
             <div class="material-textfield">
@@ -537,6 +537,9 @@ export default {
 @import "@/assets/sass/text.scss";
 h3 {
   font-weight: 600;
+}
+.input-field-tablet {
+  padding: 0px 10px 0px 0px;
 }
 .container-mt-outline-input {
   height: fit-content !important;

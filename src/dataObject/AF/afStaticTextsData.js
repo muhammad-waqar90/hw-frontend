@@ -49,4 +49,8 @@ export const generalText = {
 //TODO:We should create a file for messages that are directly accessible like messages.js or we can move these static data into message.js
 export const errors = {
   invalidFileSize: "selected file size is not valid",
+  file: {
+    size: "maximum file size should be",
+    aspectRatio: "image ratio should be 1:1",
+  },
 };

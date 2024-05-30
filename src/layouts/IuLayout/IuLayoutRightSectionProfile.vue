@@ -6,15 +6,21 @@
         :on-observed="onObserved"
         :custom-css="'bottom:unset;height:1px;top:-55px'"
       />
-      <div>
+      <div v-if="!$isTablet">
         <ProfileNavigation />
       </div>
-      <div>
-        <BookAdvert class="mt-3" />
-      </div>
-      <div>
-        <Advert :ads="topAds" />
-        <Advert :ads="bottomAds" />
+      <div :class="{ 'row px-1 mx-0': $isTablet }">
+        <div :class="{ 'col-7': $isTablet }">
+          <BookAdvert :class="$isTablet ? 'mt-1' : 'mt-3'" />
+        </div>
+        <div
+          :class="{
+            'col-5 d-flex flex-column justify-content-between': $isTablet,
+          }"
+        >
+          <Advert :ads="topAds" />
+          <Advert :ads="bottomAds" />
+        </div>
       </div>
       <Observer
         :on-observed="onObserved"
@@ -32,6 +38,7 @@ import Observer from "@/components/Misc/Observer";
 
 import { getAdvertList } from "@/services/IU/iuAdvertService";
 import toastMixin from "@/mixins/toastMixin";
+import devicesMixin from "@/mixins/Misc/devicesMixin";
 import { mapGetters } from "vuex";
 
 export default {
@@ -44,7 +51,7 @@ export default {
     Observer,
   },
 
-  mixins: [toastMixin],
+  mixins: [toastMixin, devicesMixin],
 
   data() {
     return {

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="d-flex flex-column flex-grow-1 card-bg rounded-card card-height p-3 pb-4"
+    class="d-flex flex-column flex-grow-1 card-bg rounded-card p-3 pb-4"
     :class="isComingSoon ? 'cursor-arrow' : 'cursor-pointer'"
     @click.self="
       !isComingSoon &&
@@ -8,7 +8,7 @@
     "
   >
     <div
-      class="col-12 d-flex flex-column justify-content-between align-items-center img-container-height"
+      class="col-12 d-flex flex-column justify-content-between align-items-center"
       @click="
         !isComingSoon &&
           $router.push({ name: 'iu-course', params: { id: course.id } })
@@ -34,14 +34,14 @@
       class="col-12 text-dark-gray d-flex flex-grow-1 flex-column justify-content-between"
     >
       <div
-        class="px-2 pt-3"
+        class="px-2 pt-3 text-start"
         @click="
           !isComingSoon &&
             $router.push({ name: 'iu-course', params: { id: course.id } })
         "
       >
         <h5
-          class="font-weight-600 text-center header-font text-capitalize text-md-start course-name"
+          class="font-weight-600 header-font text-capitalize text-md-start course-name"
         >
           {{ course.name }}
         </h5>
@@ -62,16 +62,18 @@
           <div class="row mr-0">
             <span
               v-if="!course.is_discounted"
-              class="col-6 font-weight-600 h5 text-primary pt-1"
+              class="col-6 font-weight-600 h5 text-primary pt-1 pe-1 word-break-normal"
               >£{{ course.price.toFixed(2) }}</span
             >
-            <span v-else class="col-6">
-              <p class="font-weight-600 h5 text-primary pt-1">
+            <span v-else class="col-6 pe-1">
+              <p
+                class="font-weight-600 h5 text-primary pt-1 pe-1 word-break-normal"
+              >
                 £{{ calculateDiscount.toFixed(2) }}
               </p></span
             >
             <span
-              class="col-6 w-50 small-height btn blue-btn position-relative rounded-pill text-uppercase small-font font-weight-600"
+              class="col-6 w-50 small-height btn blue-btn position-relative rounded-pill text-uppercase small-font font-weight-600 px-1"
               @click.stop="addToCart"
               >{{ $t("iu.course.enrollNow") }}</span
             >
@@ -260,14 +262,6 @@ export default {
   height: 100%;
 }
 
-.img-container-height {
-  height: 45%;
-}
-
-.card-height {
-  height: 320px;
-}
-
 .course-description {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -281,7 +275,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  height: 46px;
+  height: 45px;
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -311,7 +305,7 @@ export default {
 .img-wrapper {
   position: relative;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1;
   border-radius: 20px;
   overflow: hidden;
 }

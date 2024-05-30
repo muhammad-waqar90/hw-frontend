@@ -100,8 +100,7 @@ import devicesMixin from "@/mixins/Misc/devicesMixin";
 import toastMixin from "@/mixins/toastMixin";
 
 import { CART_COURSE, CART_EBOOK } from "@/dataObject/cart/cartItemTypeData";
-import { FULL_ROUNDED as fullRounded } from "@/dataObject/video/videoRoundedData";
-
+// import { FULL_ROUNDED as fullRounded } from "@/dataObject/video/videoRoundedData";
 export default {
   name: "CoursePreview",
   components: {
@@ -142,7 +141,7 @@ export default {
   },
   data() {
     return {
-      fullRounded,
+      // fullRounded,
       showAddToCartModal: false,
       mode: "about",
     };

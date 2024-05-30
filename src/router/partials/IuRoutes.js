@@ -187,6 +187,7 @@ const routes = [
     name: "iu-course",
     component: Course,
     meta: {
+      // keepAlive: false; required to destroy this component because of video-preview
       keepAlive: true,
       keepScrollPosition: true,
       title: "Course",

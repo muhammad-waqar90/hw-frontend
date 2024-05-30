@@ -1,6 +1,7 @@
 <template>
   <div
-    class="alreadyRegistered h-100 px-5 d-flex overflow-hidden font-montserrat font-weight-400 flex-column position-relative"
+    class="alreadyRegistered h-100 d-flex overflow-hidden font-montserrat font-weight-400 flex-column position-relative"
+    :class="$isTablet ? 'ps-4' : 'px-5'"
   >
     <div class="triangle-top-left" />
     <div class="triangle-top-right z-index-2" />
@@ -23,7 +24,10 @@
 </template>
 
 <script>
-export default {};
+import devicesMixin from "@/mixins/Misc/devicesMixin";
+export default {
+  mixins: [devicesMixin],
+};
 </script>
 
 <style lang="scss" scoped>

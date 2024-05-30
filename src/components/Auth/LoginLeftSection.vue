@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="onSubmit">
     <div class="img-outer mt-2 mx-auto mx-md-0 full-width-img">
-      <img :src="darkMode ? '/img/dark-logo.png' : '/img/logo.png'" />
+      <img src="/img/logo.png" class="bg-static-white rounded-card px-3 py-2" />
     </div>
     <div class="mt-5">
       <div class="container-mt-outline-input">
@@ -62,7 +62,7 @@
     </div>
 
     <div class="row mt-2 mt-md-4">
-      <div :class="[showSignUp ? 'col-lg-6' : 'col-lg-4']" class="col-12">
+      <div :class="[showSignUp ? 'col-lg-6' : 'col-lg-5']" class="col-12">
         <ButtonWithLoading
           class="submit-button btn col-12 blue-btn font-weight-600 btn-font-size py-2"
           :is-submit="true"
@@ -97,7 +97,6 @@ import { required } from "vuelidate/lib/validators";
 import devicesMixin from "@/mixins/Misc/devicesMixin";
 import toastMixin from "@/mixins/toastMixin";
 import dompurifyMixin from "@/mixins/dompurifyMixin";
-import { mapGetters } from "vuex";
 export default {
   name: "LoginSectionLeft",
   components: { ButtonWithLoading },
@@ -136,12 +135,6 @@ export default {
     showSeparator() {
       return this.$isPhone || (this.$isTablet && this.isModal);
     },
-    darkMode() {
-      return this.theme == "night-mode" ? true : false;
-    },
-    ...mapGetters({
-      theme: "theme/getThemeMode",
-    }),
   },
   methods: {
     onSubmit() {

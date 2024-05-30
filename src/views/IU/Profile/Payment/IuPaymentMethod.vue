@@ -1,5 +1,5 @@
 <template>
-  <div class="container font-montserrat px-3">
+  <div class="container font-montserrat" :class="$isPhone ? 'p-0' : 'px-3'">
     <template v-if="currentPaymentMethodApi.loading">
       <LoadingPaymentMethod />
     </template>
@@ -190,22 +190,5 @@ export default {
 }
 .btn-font {
   font-size: 10px;
-}
-// Todo: need to check if the style is required or not
-.processing-gif {
-  width: 36%;
-  margin: 0 32%;
-}
-.processing-text {
-  color: $blue;
-  font-family: "Montserrat";
-}
-.loading-font {
-  font-size: 90px;
-  letter-spacing: 5px;
-}
-.hr-white {
-  border-width: 2px;
-  opacity: 1;
 }
 </style>

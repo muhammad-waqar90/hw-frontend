@@ -1,17 +1,21 @@
 <template>
   <article class="font-montserrat rounded-card bg-white mt-3 p-4">
-    <div class="d-flex justify-content-between pb-4">
+    <div
+      class="d-flex justify-content-between"
+      :class="$isPhone || $isTablet ? 'pb-2' : 'pb-4'"
+    >
       <h4 class="text-dark-gray font-weight-600 mb-0">
         {{ $t("iu.course.availableCourses") }}
       </h4>
       <router-link
         :to="{ name: 'iu-courses-available' }"
+        class="height-25"
         :class="{
           'disabled-link': !courses?.length,
         }"
       >
         <button
-          class="btn blue-btn btn-font font-weight-600 rounded-card h-100 px-3 py-0"
+          class="btn blue-btn btn-font font-weight-600 rounded-card h-100 px-3 py-0 word-break-normal"
         >
           ALL
         </button>
@@ -19,7 +23,7 @@
     </div>
 
     <div v-if="loading && courses?.length == 0" class="py-md-3">
-      <LoadingAvailableCourse :number-of-items="$isMobile ? 1 : 2" />
+      <LoadingCourse />
     </div>
 
     <section
@@ -30,8 +34,12 @@
       <div
         v-for="course in courses"
         :key="course.id"
-        class="col-4 px-0 pe-3 d-flex mt-4"
-        :class="$isPhone ? 'col-11' : 'col-4'"
+        class="px-0 d-flex"
+        :class="{
+          'col-12 pe-2 mt-2': $isPhone,
+          'col-6 pe-3 mt-3': $isTablet,
+          'pe-3 col-4 mt-4': !$isPhone && !$isTablet,
+        }"
       >
         <CourseCard type="default" :course="course" @add-to-cart="addToCart" />
       </div>
@@ -55,7 +63,7 @@
 
 <script>
 import CourseCard from "@/components/IU/Courses/CourseCard.vue";
-import LoadingAvailableCourse from "@/components/IU/Courses/LoadingAvailableCourse";
+import LoadingCourse from "@/components/IU/Courses/LoadingCourse";
 import Observer from "@/components/Misc/Observer";
 
 import devicesMixin from "@/mixins/Misc/devicesMixin";
@@ -63,7 +71,7 @@ import devicesMixin from "@/mixins/Misc/devicesMixin";
 export default {
   components: {
     CourseCard,
-    LoadingAvailableCourse,
+    LoadingCourse,
     Observer,
   },
   mixins: [devicesMixin],
@@ -111,7 +119,7 @@ export default {
 }
 .course-list {
   overflow-y: auto;
-  max-height: calc(100vh - 200px);
+  max-height: calc(100vh - 195px);
 }
 .small-course-list {
   overflow-y: auto;

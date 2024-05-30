@@ -1,5 +1,5 @@
 <template>
-  <div class="container px-3 font-montserrat">
+  <div class="container font-montserrat" :class="$isPhone ? 'px-0' : 'px-3'">
     <div class="row">
       <div class="col">
         <div class="bg-white rounded-card font-montserrat text-dark-gray">

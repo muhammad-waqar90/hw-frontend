@@ -17,7 +17,8 @@
     />
     <router-link :to="{ name: 'iu-shop' }">
       <button
-        class="btn blue-btn rounded-pill font-weight-600 small-font px-4 my-2"
+        class="btn blue-btn rounded-pill font-weight-600 px-4 my-2"
+        :class="{ 'small-font': !$isTablet }"
       >
         {{ $t("iu.lesson.bookAdvert.buy") }}
       </button>
@@ -26,11 +27,13 @@
 </template>
 
 <script>
+import devicesMixin from "@/mixins/Misc/devicesMixin";
 export default {
   // todo: need to check that property is required or not.
   props: {
     isInQuiz: false,
   },
+  mixins: [devicesMixin],
 };
 </script>
 

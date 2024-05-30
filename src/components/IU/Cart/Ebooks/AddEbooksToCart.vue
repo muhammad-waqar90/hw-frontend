@@ -7,7 +7,7 @@
       <div class="ps-3">
         {{ $t("iu.cart.types.ebook") }}
       </div>
-      <div class="ps-5">
+      <div :class="$isPhone || $isTablet ? 'ps-3' : 'ps-5'">
         <BookOpenOutline :size="36" />
       </div>
     </div>

@@ -3,8 +3,8 @@
     <div class="logoHolder w-100">
       <div class="d-flex justify-content-center my-2 my-md-4">
         <img
-          class="logo"
-          :src="darkMode ? '/img/dark-logo.png' : '/img/logo.png'"
+          class="logo bg-static-white rounded-card px-3 py-2"
+          :src="'/img/logo.png'"
           alt=""
         />
       </div>
@@ -77,7 +77,6 @@ import ButtonWithLoading from "@/components/Misc/Buttons/ButtonWithLoading.vue";
 import { required, email } from "vuelidate/lib/validators";
 import { validationMixin } from "vuelidate";
 import devicesMixin from "@/mixins/Misc/devicesMixin";
-import { mapGetters } from "vuex";
 export default {
   name: "RegisterSuccess",
   components: { ButtonWithLoading },
@@ -127,12 +126,6 @@ export default {
       }
       return this.loading;
     },
-    darkMode() {
-      return this.theme == "night-mode" ? true : false;
-    },
-    ...mapGetters({
-      theme: "theme/getThemeMode",
-    }),
   },
   mounted() {
     this.username = this.usernameProp;

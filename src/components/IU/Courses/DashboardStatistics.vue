@@ -2,20 +2,27 @@
   <article
     v-if="hasUserOverview"
     class="font-montserrat d-flex justify-content-between"
-    :class="{ 'row user-overview': $isPhone }"
+    :class="{
+      'row user-overview': $isPhone || $isTablet,
+    }"
   >
     <div
       class="bg-blue rounded-card text-white p-4"
-      :class="$isPhone ? 'col-12 mb-2' : 'custom-col-2'"
+      :class="
+        $isPhone ? 'col-12 mb-2' : $isTablet ? 'col-12 mb-3' : 'custom-col-2'
+      "
     >
       <h4>
         Welcome back <span class="font-weight-600">{{ firstName }}</span>
       </h4>
       <div class="row g-0">
-        <div class="col-auto">
+        <div class="col-auto" :class="{ 'col-1': $isTablet }">
           <svg-quote class="icon-medium me-3" />
         </div>
-        <div class="col-10 small-text fst-italic">
+        <div
+          class="col-10 small-text text-md-lg fst-italic"
+          :class="{ 'small-text': !$isTablet, 'col-11': $isTablet }"
+        >
           May <span class="font-weight-600">Allah Almighty</span> give you the
           wealth of humility and meaningful character so that you can become the
           best servant of
@@ -26,7 +33,9 @@
     </div>
     <div
       class="bg-orange rounded-card text-white ps-4 pe-3 pt-4 pb-3"
-      :class="$isPhone ? 'col-12 mb-2' : 'custom-col-1'"
+      :class="
+        $isPhone ? 'col-12 mb-2' : $isTablet ? 'custom-col-3' : 'custom-col-1'
+      "
     >
       <div class="row g-0 h-100">
         <div class="col-12 d-flex flex-column justify-content-between">
@@ -46,7 +55,9 @@
     </div>
     <div
       class="bg-green rounded-card text-white ps-4 pe-3 pt-4 pb-3"
-      :class="$isPhone ? 'col-12 mb-2' : 'custom-col-1'"
+      :class="
+        $isPhone ? 'col-12 mb-2' : $isTablet ? 'custom-col-3' : 'custom-col-1'
+      "
     >
       <div class="row g-0 h-100">
         <div class="col-12 d-flex flex-column justify-content-between">
@@ -66,7 +77,7 @@
     </div>
     <div
       class="bg-red rounded-card text-white ps-4 pe-3 pt-4 pb-3"
-      :class="$isPhone ? 'col-12' : 'custom-col-1'"
+      :class="$isPhone ? 'col-12' : $isTablet ? 'custom-col-3' : 'custom-col-1'"
     >
       <div class="row g-0 h-100">
         <div class="col-12 d-flex flex-column justify-content-between">
@@ -159,6 +170,9 @@ export default {
 .custom-col-2 {
   width: 35%;
 }
+.custom-col-3 {
+  width: 32%;
+}
 .user-overview {
   width: 100% !important;
   margin-left: 0px !important;
@@ -186,7 +200,7 @@ export default {
   font-size: 17px;
 }
 .number-font {
-  font-size: 40px;
+  font-size: 2.2rem;
 }
 .icon-container-orange {
   background-color: #c48201;

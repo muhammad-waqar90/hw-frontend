@@ -123,7 +123,7 @@ export default {
 
 .img {
   object-fit: cover;
-  aspect-ratio: 1/1;
+  aspect-ratio: 1;
 }
 .total-price {
   font-size: 18px;

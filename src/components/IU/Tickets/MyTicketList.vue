@@ -128,7 +128,7 @@ export default {
   border: 2px solid $blue;
 }
 .tickets-list {
-  height: calc(100vh - 400px);
+  height: calc(100vh - 310px);
   overflow: auto;
 }
 .tickets-list > div:first-child {
@@ -145,6 +145,7 @@ export default {
 @media (min-width: $smallPhoneWidth) and (max-width: $laptopWidth) {
   .tickets-list {
     height: calc(100vh - 395px);
+    min-height: 400px;
   }
 }
 </style>

@@ -9,8 +9,8 @@
       <template slot="body">
         <div class="text-center">
           <img
-            class="col-8 col-md-4"
-            :src="darkMode ? '/img/dark-logo.png' : '/img/logo.png'"
+            class="col-8 col-md-4 bg-static-white rounded-card p-2"
+            :src="'/img/logo.png'"
             alt=""
           />
           <h4 class="color-gray mt-4">
@@ -35,18 +35,9 @@
 
 <script>
 import Modal from "@/components/Misc/Modal";
-import { mapGetters } from "vuex";
 export default {
   components: {
     Modal,
-  },
-  computed: {
-    darkMode() {
-      return this.theme == "night-mode" ? true : false;
-    },
-    ...mapGetters({
-      theme: "theme/getThemeMode",
-    }),
   },
   methods: {
     acceptGdpr() {

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="pb-3 d-flex flex-column scrollbar-blue overflow-y-auto outer flex-grow-1 pe-1"
+    class="pb-3 d-flex flex-column scrollbar-blue overflow-y-auto flex-grow-1 pe-1"
   >
     <template v-if="list?.length == 0 && !loading">
       <div
@@ -56,7 +56,6 @@ import FullAnswer from "@/components/Common/Faqs/Dashboard/FullAnswer";
 import LoadingFaq from "@/components/Common/Faqs/Dashboard/LoadingFaq";
 import Observer from "@/components/Misc/Observer";
 import SvgFaqEmpty from "@/assets/svg/faq-empty.svg";
-
 import userRoleMixin from "@/mixins/User/userRoleMixin";
 
 export default {
@@ -115,10 +114,6 @@ export default {
 
 .answer {
   font-size: 14px;
-}
-
-.outer {
-  height: calc(100vh - 369px);
 }
 
 .empty-faq-icon {

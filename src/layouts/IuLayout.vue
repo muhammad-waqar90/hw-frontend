@@ -17,10 +17,10 @@
         <div class="row">
           <div
             :class="{
-              'col-12 pb-3': !$route.meta.noMobilePadding,
+              'col-12 pb-sm-1 pb-md-1 pb-lg-3': !$route.meta.noMobilePadding,
               'col-12 col-xl-9 flex-grow-1 pb-lg-0':
                 !$route.meta.independentLayout,
-              'mb-2': $isPhone,
+              'mb-2 pb-0': $isPhone || $isTablet,
             }"
           >
             <slot></slot>
@@ -28,7 +28,9 @@
           <div
             v-if="!$route.meta.independentLayout"
             :class="
-              $isPhone ? 'd-flex justify-content-center' : 'col flex-grow-0'
+              $isPhone || $isTablet
+                ? 'd-flex justify-content-center'
+                : 'col flex-grow-0'
             "
           >
             <IuLayoutRightSection />

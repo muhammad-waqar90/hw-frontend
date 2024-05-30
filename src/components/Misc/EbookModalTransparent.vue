@@ -2,7 +2,11 @@
   <transition v-if="rendered" name="modal">
     <div v-show="shouldShow" class="modal-mask">
       <div class="modal-wrapper">
-        <div v-click-outside="onClickOutside" class="modal-container">
+        <div
+          v-click-outside="onClickOutside"
+          class="modal-container"
+          :class="{ 'modal-container-tab': $isTablet }"
+        >
           <div v-if="!hideBody" class="modal-body">
             <div class="position-relative">
               <close
@@ -21,7 +25,9 @@
 
 <script>
 import Close from "vue-material-design-icons/CloseThick";
+import devicesMixin from "@/mixins/Misc/devicesMixin";
 export default {
+  mixins: [devicesMixin],
   components: {
     Close,
   },
@@ -104,6 +110,10 @@ export default {
   overflow: hidden;
   padding-right: 4em !important;
   padding-left: 4em !important;
+}
+.modal-container-tab {
+  padding-right: 3em !important;
+  padding-left: 3em !important;
 }
 .modal-header {
   border: none;

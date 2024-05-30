@@ -1,6 +1,6 @@
 <template>
   <div
-    class="d-flex justify-content-between justify-content-lg-start align-items-center text-uppercase overflow-auto scrollbar-blue"
+    class="d-flex justify-content-between justify-content-md-start align-items-center text-uppercase overflow-auto scrollbar-blue"
   >
     <span
       v-for="level in levels"

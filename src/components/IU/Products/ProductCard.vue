@@ -1,15 +1,15 @@
 <template>
   <div
-    class="d-flex flex-column flex-grow-1 card-bg rounded-card cursor-pointer card-height p-3 pb-4"
+    class="d-flex flex-column flex-grow-1 card-bg rounded-card cursor-pointer p-3 pb-4"
     @click.self="$router.push({ name: 'iu-book', params: { id: book.id } })"
   >
     <div
-      class="col-12 d-flex flex-column justify-content-between align-items-center img-container-height"
+      class="col-12 d-flex flex-column justify-content-between align-items-center"
       @click="$router.push({ name: 'iu-book', params: { id: book.id } })"
     >
       <img
         :src="book.img ? book.img : getDefaultImage()"
-        class="card-img-top"
+        class="card-img"
         alt="Image Preview"
         @error="handleImageError"
       />
@@ -120,18 +120,10 @@ export default {
   font-size: 10px;
 }
 
-.card-img-top {
+.card-img {
   object-fit: cover;
   border-radius: 20px;
-  height: 100%;
-}
-
-.img-container-height {
-  height: 55%;
-}
-
-.card-height {
-  height: 350px;
+  aspect-ratio: 1;
 }
 
 .book-description {
@@ -147,7 +139,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  height: 46px;
+  height: 45px;
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;

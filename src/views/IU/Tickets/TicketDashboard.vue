@@ -1,5 +1,5 @@
 <template>
-  <div class="position-relative overflow-hidden">
+  <div class="position-relative overflow-hidden rounded-card-bottom">
     <div class="content tickets-dashboard-outer">
       <div
         class="row search-create-section-outer"
@@ -14,7 +14,7 @@
             @on-search="handleSearch"
           />
         </div>
-        <div class="col-auto px-3 mt-3 mt-lg-0" :class="{ 'w-100': $isMobile }">
+        <div class="col-auto px-3 mt-lg-0" :class="{ 'mt-3 w-100': $isPhone }">
           <ButtonWithLoading
             class="btn blue-btn rounded-card h-100 py-lg-0"
             :disabled="mode == 'create'"
@@ -324,16 +324,17 @@ export default {
 @import "@/assets/sass/_variables.scss";
 
 .my-tickets-outer {
-  min-height: 650px;
+  // min-height: 650px;
   flex: 0 0 450px;
 }
 .tickets-dashboard-outer {
   overflow: hidden;
 }
 
-@media (max-width: $smallPhoneWidth) {
+@media (max-width: $tabletWidth) {
   .ticket-outer {
-    height: calc(var(--vh, 1vh) * 100 - 50px) !important;
+    // height: calc(var(--vh, 1vh) * 100 - 140px) !important;
+    height: 100%;
   }
 }
 @media (max-width: $laptopWidth) {
@@ -345,7 +346,8 @@ export default {
     transition: all, 0.3s ease-in-out;
     padding-left: 0px;
     padding-right: 0px;
-    height: calc(var(--vh, 1vh) * 100 - 129px);
+    // height: calc(var(--vh, 1vh) * 100 - 180px);
+    height: 100%;
     &.ticket-outer--active {
       transform: translateX(0);
     }

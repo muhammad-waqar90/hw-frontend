@@ -6,10 +6,11 @@
       </h4>
       <router-link
         :to="{ name: 'iu-courses-top' }"
+        class="height-25"
         :class="{ 'disabled-link': !courses?.length }"
       >
         <button
-          class="btn blue-btn btn-font font-weight-600 rounded-card h-100 px-3 py-0 mx-4"
+          class="btn blue-btn btn-font font-weight-600 rounded-card h-100 px-3 py-0 mx-4 word-break-normal"
         >
           ALL
         </button>
@@ -26,7 +27,7 @@
         :dots="false"
         :nav="false"
         :mouse-drag="false"
-        :key="$isPhone"
+        :key="itemsCount"
       >
         <template slot="prev">
           <div class="nav-btn shadow-sm prev">
@@ -92,7 +93,7 @@ export default {
   },
   computed: {
     itemsCount() {
-      return this.$isPhone ? 1 : 3;
+      return this.$isPhone ? 1 : this.$isTablet ? 2 : 3;
     },
   },
   methods: {

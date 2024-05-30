@@ -182,7 +182,7 @@ export default {
 }
 .event-img {
   width: 100%;
-  max-height: 200px;
+  aspect-ratio: 1;
   object-fit: cover;
   border-radius: 25px;
 }

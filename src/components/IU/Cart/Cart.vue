@@ -277,6 +277,7 @@ export default {
 .cart-list {
   overflow-y: auto;
   height: calc(100vh - 390px);
+  min-height: 200px;
 }
 .small-cart-list {
   height: calc(100vh - 270px) !important;

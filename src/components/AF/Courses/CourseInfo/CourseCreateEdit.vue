@@ -4,7 +4,7 @@
       <div class="row px-2">
         <div class="col-md-6 col-sm-12">
           <div class="mb-3">
-            <label>Name (min:4, max:50):</label>
+            <label>Name (min:4, max:60):</label>
             <div class="position-relative">
               <input
                 v-model.trim.lazy="$v.name.$model"
@@ -141,7 +141,14 @@
                 v-else-if="!$v.selectedFile.isFileValid"
                 class="form-text text-danger error"
               >
-                {{ errors.invalidFileSize }}
+                {{ errors.file.size }}
+                {{ maxFileSize.course }}MB
+              </small>
+              <small
+                v-else-if="!$v.selectedFile.isAspectRatioValid"
+                class="form-text text-danger error"
+              >
+                {{ errors.file.aspectRatio }}
               </small>
             </template>
           </div>
@@ -176,8 +183,11 @@ import { getInAppTiers } from "@/services/AF/afInAppTiersService";
 import { courseText, errors } from "@/dataObject/AF/afStaticTextsData.js";
 import GeneralCkEditor from "@/components/Misc/GeneralCkEditor";
 import dompurifyMixin from "@/mixins/dompurifyMixin";
-import { validateFileSize } from "@/utils/validationUtils.js";
-import { MAX_FILE_SIZE } from "@/dataObject/AF/fileSizeData.js";
+import {
+  validateFileAspectRatio,
+  validateFileSize,
+} from "@/utils/validationUtils.js";
+import { MAX_FILE_SIZE as maxFileSize } from "@/dataObject/AF/fileSizeData.js";
 import AsyncVueSelect from "@/components/Misc/Filters/AsyncVueSelect.vue";
 
 export default {
@@ -194,7 +204,7 @@ export default {
       name: {
         required,
         minLength: minLength(4),
-        maxLength: maxLength(50),
+        maxLength: maxLength(60),
         isSanitizeInput: function (value) {
           return this.sanitizeWithBusinesslogic(value);
         },
@@ -230,7 +240,17 @@ export default {
         isFileValid: (value) => {
           if (value == null && this.imgPreview && this.mode === "edit")
             return true;
-          return validateFileSize(value, MAX_FILE_SIZE.course);
+          return validateFileSize(value, maxFileSize.course);
+        },
+        isAspectRatioValid: (value) => {
+          if (value == null && this.imgPreview && this.mode === "edit")
+            return true;
+          return (
+            value != null &&
+            validateFileAspectRatio(value).then((result) => {
+              return !!result.isValidDimensions;
+            })
+          );
         },
       },
       videoPreviewS3Link: {
@@ -271,6 +291,7 @@ export default {
       videoPreviewS3Link: "",
       courseText,
       errors,
+      maxFileSize,
     };
   },
   watch: {
@@ -326,9 +347,11 @@ export default {
         : "";
     },
     storeFileTemp(e) {
-      this.selectedFile = e.target.files[0];
+      if (!e.target?.files[0]) return;
+
+      this.selectedFile = e.target?.files[0];
       this.$v.selectedFile.$touch();
-      if (this.$v.selectedFile.$invalid) return (this.imgPreview = null);
+      // if (this.$v.selectedFile.$invalid) return (this.imgPreview = null); // we need this for image preview
       this.$emit("on-change", "selectedFile", this.selectedFile);
       if (this.selectedFile) {
         this.imgPreview = URL.createObjectURL(this.selectedFile);

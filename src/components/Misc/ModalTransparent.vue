@@ -2,7 +2,11 @@
   <transition v-if="rendered" name="modal">
     <div v-show="shouldShow" class="modal-mask">
       <div class="modal-wrapper">
-        <div v-click-outside="onClickOutside" class="modal-container container">
+        <div
+          v-click-outside="onClickOutside"
+          class="modal-container container"
+          :class="{ 'py-5': $isTablet }"
+        >
           <div class="position-relative">
             <close
               v-if="!hideCloseButton"
@@ -34,6 +38,8 @@
 
 <script>
 import Close from "vue-material-design-icons/CloseThick";
+import devicesMixin from "@/mixins/Misc/devicesMixin";
+
 export default {
   components: {
     Close,
@@ -42,6 +48,7 @@ export default {
         /* webpackChunkName: "ConfirmationButtonsComponent" */ "@/components/Misc/ConfirmationButtons"
       ),
   },
+  mixins: [devicesMixin],
   props: {
     closeOnClickOutside: {
       type: Boolean,
@@ -182,8 +189,8 @@ export default {
 }
 @media only screen and (min-width: $tabletWidth) {
   .modal-container {
-    padding-right: 5em;
-    padding-left: 5em;
+    padding-right: 1em;
+    padding-left: 1em;
   }
 }
 

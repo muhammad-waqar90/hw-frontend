@@ -1,8 +1,6 @@
 version: 0.2
 phases:
   install:
-    runtime-versions:
-      docker: 18
     commands:
       - aws sts get-caller-identity
       - mkdir ~/.aws/ && touch ~/.aws/config
@@ -24,13 +22,13 @@ phases:
     commands:
       - AccountID=$(aws sts get-caller-identity --query Account --output text)
       - CommitID="$(echo $GitCommitID | head -c 8)"
-      - $(aws ecr get-login --registry-ids $AccountID --no-include-email --region ${AWS_DEFAULT_REGION})
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AccountID.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/$ServiceName
       - REPO_URI="$AccountID.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/$ServiceName"		
       - REPOSITORY_URI="$REPO_URI-$BranchName"            
   build:
     commands:
-        - DOCKER_BUILDKIT=0 docker build -f script/stage/docker/Dockerfile --build-arg VUE_APP_ENV=$VUE_APP_ENV --build-arg VUE_APP_GOOGLE_PLAY_URL=$VUE_APP_GOOGLE_PLAY_URL --build-arg VUE_APP_APPLE_STORE_URL=$VUE_APP_APPLE_STORE_URL --build-arg VUE_APP_GA_KEY=$VUE_APP_GA_KEY --build-arg VUE_APP_STRIPE_KEY=$VUE_APP_STRIPE_KEY --build-arg VUE_APP_HCAPTCHA_SITE_KEY=$VUE_APP_HCAPTCHA_SITE_KEY --build-arg VUE_APP_HCAPTCHA_SECRET_KEY=$VUE_APP_HCAPTCHA_SECRET_KEY --build-arg VUE_APP_TERMS_LINK=$VUE_APP_TERMS_LINK --build-arg VUE_APP_PRIVACY_LINK=$VUE_APP_PRIVACY_LINK --build-arg VUE_APP_API_URL=$VUE_APP_API_URL -t ${REPOSITORY_URI}:${CommitID} .
-        - docker tag ${REPOSITORY_URI}:${CommitID} ${REPOSITORY_URI}:latest
+      - DOCKER_BUILDKIT=0 docker build -f script/stage/docker/Dockerfile --build-arg VUE_APP_ENV=$VUE_APP_ENV --build-arg VUE_APP_GOOGLE_PLAY_URL=$VUE_APP_GOOGLE_PLAY_URL --build-arg VUE_APP_APPLE_STORE_URL=$VUE_APP_APPLE_STORE_URL --build-arg VUE_APP_GA_KEY=$VUE_APP_GA_KEY --build-arg VUE_APP_STRIPE_KEY=$VUE_APP_STRIPE_KEY --build-arg VUE_APP_HCAPTCHA_SITE_KEY=$VUE_APP_HCAPTCHA_SITE_KEY --build-arg VUE_APP_HCAPTCHA_SECRET_KEY=$VUE_APP_HCAPTCHA_SECRET_KEY --build-arg VUE_APP_TERMS_LINK=$VUE_APP_TERMS_LINK --build-arg VUE_APP_PRIVACY_LINK=$VUE_APP_PRIVACY_LINK --build-arg VUE_APP_API_URL=$VUE_APP_API_URL -t ${REPOSITORY_URI}:${CommitID} .
+      - docker tag ${REPOSITORY_URI}:${CommitID} ${REPOSITORY_URI}:latest
   post_build:
     commands:
       - docker push ${REPOSITORY_URI}:${CommitID}

@@ -1,8 +1,8 @@
 <template>
-  <div class="container font-montserrat px-3">
+  <div class="container font-montserrat" :class="$isPhone ? 'px-0' : 'px-3'">
     <div
-      class="row bg-white rounded-card"
-      :class="{ 'justify-content-center': $isPhone }"
+      class="row bg-white rounded-card p-0 mx-0"
+      :class="{ 'justify-content-center': $isPhone || $isTablet }"
     >
       <div class="p-4 text-center text-md-start">
         <h4 class="font-weight-600 color-gray mb-0">
@@ -13,26 +13,29 @@
       <div
         v-if="countriesLoaded"
         class="col-6 py-5 item rounded-card animated-loading-background"
-        :class="$isPhone ? 'small-item col-12' : 'ms-4'"
+        :class="$isPhone || $isTablet ? 'small-item col-12' : 'ms-4'"
       />
       <LoadingSalaryScale
         v-if="countriesLoaded"
         class="col-6 py-3"
-        :class="{ 'col-12': $isPhone }"
+        :class="{ 'col-12': $isPhone || $isTablet }"
         :number-of-items="4"
       />
       <div
         v-if="!countriesLoaded"
         class="col-6 pt-3"
-        :class="{ 'col-12': $isPhone }"
+        :class="{ 'col-12': $isPhone || $isTablet, 'px-5': $isTablet }"
       >
         <div
           class="left-header text-white p-3"
-          :class="{ 'small-header': $isPhone }"
+          :class="{ 'small-header': $isPhone || $isTablet }"
         >
           {{ $t("iu.profile.labels.salaryScale.discountEntitlement") }}
         </div>
-        <div class="left-section mb-4 mr-4 ml-4 p-4">
+        <div
+          class="left-section mr-4 ml-4 p-4"
+          :class="$isPhone || $isTablet ? 'mb-2' : 'mb-4'"
+        >
           <div class="d-flex flex-column py-2 text-dark-gray">
             {{ $t("iu.profile.labels.salaryScale.selectCountryLabel") }}
             <div class="d-flex position-relative mt-3">
@@ -68,7 +71,8 @@
         class="col-6 pt-3"
         :class="{
           'opacity-50 pe-none': discountRanges.length === 0,
-          'col-12': $isPhone,
+          'col-12 pb-4': $isPhone || $isTablet,
+          'px-5': $isTablet,
         }"
       >
         <div class="right-section p-3">
@@ -82,7 +86,7 @@
                   class="col discount-list w-100"
                   :class="{
                     active: idx == currentStep,
-                    'small-discount-list': $isPhone,
+                    'small-discount-list': $isPhone || $isTablet,
                   }"
                   @click="setCurrentStep(idx, range)"
                 >
@@ -109,6 +113,9 @@
         </div>
         <ButtonWithLoading
           class="btn blue-btn w-100 my-2 rounded-card"
+          :class="{
+            'mt-4': $isPhone || $isTablet,
+          }"
           :loading="salaryScaleApi?.loading"
           @action="createUpdateScale"
           :disabled="disableSalaryScaleButton"

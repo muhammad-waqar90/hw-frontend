@@ -158,6 +158,14 @@ textarea {
   word-break: normal;
 }
 
+.height-25 {
+  height: 25px;
+}
+
+.bg-static-white {
+  background-color: $static-white !important;
+}
+
 // Fix for tables breaking
 table {
   word-break: normal;

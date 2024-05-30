@@ -8,7 +8,7 @@
         <button
           v-if="courseOwned"
           class="col-4 btn blue-btn btn-font rounded-pill text-uppercase font-weight-600 mt-5 mb-2"
-          :class="{ 'col-8': $isPhone }"
+          :class="{ 'col-8': $isPhone, 'col-6': $isTablet }"
           @click="openEbookPrompt"
         >
           {{ $t("iu.course.ebookPurchase") }}

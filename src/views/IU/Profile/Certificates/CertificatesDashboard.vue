@@ -1,10 +1,10 @@
 <template>
-  <div class="container font-montserrat px-3" :class="{ 'px-4 ': $isPhone }">
-    <div class="row">
+  <div class="container font-montserrat" :class="$isPhone ? 'px-0' : 'px-3'">
+    <div class="row" :class="{ 'm-0': $isPhone }">
       <div
         class="col"
         :class="{
-          'certificates-container scrollbar-blue-white-bg ': $isPhone,
+          'certificates-container scrollbar-blue-white-bg': $isPhone,
         }"
       >
         <div

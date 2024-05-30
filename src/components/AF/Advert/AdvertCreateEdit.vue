@@ -20,7 +20,7 @@
               <div class="position-relative">
                 <InputImageWithPreview
                   v-if="hasInitialized"
-                  :label="'Image (max:2MB, jpeg, jpg, png, gif):'"
+                  :label="'Image (max:2MB, jpeg, jpg, png, gif, image ratio should be 1:1):'"
                   :image-preview="imgPreview"
                   :error="$v.image.$error"
                   @on-image="handleImage"
@@ -97,7 +97,10 @@ import InputImageWithPreview from "@/components/AF/InputImageWithPreview.vue";
 import { required, minLength, maxLength, url } from "vuelidate/lib/validators";
 import { add, format } from "date-fns";
 import dompurifyMixin from "@/mixins/dompurifyMixin";
-import { validateFileSize } from "@/utils/validationUtils.js";
+import {
+  validateFileAspectRatio,
+  validateFileSize,
+} from "@/utils/validationUtils.js";
 import { MAX_FILE_SIZE } from "@/dataObject/AF/fileSizeData.js";
 
 export default {
@@ -155,6 +158,17 @@ export default {
           if (value == "" && this.imgPreview && this.mode === "edit")
             return true;
           return validateFileSize(value, MAX_FILE_SIZE.advert);
+        },
+        isAspectRatioValid: (value) => {
+          if (value == "" && this.mode === "create") return false;
+          if (value == "" && this.imgPreview && this.mode === "edit")
+            return true;
+          return (
+            value != "" &&
+            validateFileAspectRatio(value).then((result) => {
+              return !!result.isValidDimensions;
+            })
+          );
         },
       },
       status: {

@@ -5,10 +5,20 @@
   >
     <div class="container font-montserrat my-auto">
       <div class="row custom-container bg-white rounded-card one-edge-shadow">
-        <div v-if="!$isPhone" class="col-6 px-0">
+        <div
+          v-if="!$isPhone"
+          class="px-0"
+          :class="$isTablet ? 'col-5' : 'col-6'"
+        >
           <RegisterLeftSection />
         </div>
-        <div class="col-12 col-md-6 form-padding">
+        <div
+          :class="
+            $isTablet
+              ? 'col-7 form-padding-tablet'
+              : 'col-12 col-md-6 form-padding'
+          "
+        >
           <RegisterRightSection
             :toggle-reset-captcha="toggleResetCaptcha"
             :loading="loading"
@@ -110,6 +120,10 @@ export default {
 
 .full-height {
   min-height: calc(95vh - 56px - 2rem);
+}
+
+.form-padding-tablet {
+  padding: 3rem 1rem;
 }
 
 .form-padding {

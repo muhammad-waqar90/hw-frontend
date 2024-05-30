@@ -113,7 +113,10 @@
 
       <div class="d-flex flex-column col-12 col-md-6 py-1">
         <div class="container-mt-outline-input">
-          <div class="material-textfield">
+          <div
+            class="material-textfield"
+            :class="{ 'small-material-textfield': $isPhone || $isTablet }"
+          >
             <input
               :disabled="true"
               :value="email"
@@ -127,7 +130,7 @@
     </div>
     <div
       class="d-flex flex-column col-12 col-md-6"
-      :class="$isPhone ? 'py-1' : 'py-2'"
+      :class="$isPhone ? 'py-1' : 'py-2 pe-2'"
     >
       <div class="d-flex position-relative">
         <select
@@ -261,5 +264,9 @@ export default {
 
 .material-textfield input {
   padding-right: 40px;
+}
+
+.small-material-textfield input {
+  padding-right: 10px !important;
 }
 </style>

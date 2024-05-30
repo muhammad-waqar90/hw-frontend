@@ -38,7 +38,12 @@
       </div>
     </div>
     <div v-if="selectedSubject">
-      <div class="instructions my-2">
+      <div
+        class="ticket-instructions my-2"
+        :class="{
+          'ticket-instructions-tablet': $isTablet,
+        }"
+      >
         <span v-html="instructions" />
       </div>
       <div v-if="mode === 'guest'" class="form-group mt-2 mt-lg-4">
@@ -63,7 +68,7 @@
           </div>
         </template>
       </div>
-      <div class="mt-4 position-relative">
+      <div class="mt-2 position-relative">
         <div class="form-group">
           <label class="font-weight-600 mb-1 text-dark-gray">{{
             $t("gu.ticketDescription")
@@ -98,7 +103,7 @@
           </template>
         </div>
       </div>
-      <div class="mt-4">
+      <div class="mt-2">
         <label class="font-weight-600 mb-1 text-dark-gray">
           {{ $t("iu.uploadScreenshots.uploadScreenshots") }}
         </label>
@@ -123,12 +128,8 @@
           {{ $t("gu.send") }}
         </ButtonWithLoading>
       </div>
-      <div
-        v-else
-        class="iu-create-ticket-submit"
-        :class="{ 'small-iu-create-ticket-submit': $isPhone }"
-      >
-        <hr />
+      <div v-else class="iu-create-ticket-submit">
+        <hr v-if="!$isPhone && !$isTablet" />
         <ButtonWithLoading
           class="btn blue-btn text-uppercase rounded-card float-right small-text px-4"
           :class="{
@@ -332,14 +333,10 @@ textarea {
 }
 
 .iu-create-ticket-submit {
-  margin-top: 70px;
-  position: relative;
+  // margin-top: 10px;
+  position: absolute;
   bottom: 30px;
   width: 100%;
-}
-.small-iu-create-ticket-submit {
-  position: absolute;
-  bottom: 40px;
 }
 
 .small-text {
@@ -358,7 +355,7 @@ textarea {
     }
   }
   textarea {
-    margin-bottom: 35px;
+    margin-bottom: 0px;
   }
   .guestButtons {
     bottom: 0;
@@ -377,12 +374,18 @@ textarea {
   }
 }
 
-.instructions {
+.ticket-instructions {
   text-align: center;
+  max-height: 15vh;
+  overflow: auto;
   span {
     color: $darkgray;
     font-size: 15px;
   }
+}
+.ticket-instructions-tablet {
+  max-height: 18vh;
+  overflow: auto;
 }
 
 .form-control {

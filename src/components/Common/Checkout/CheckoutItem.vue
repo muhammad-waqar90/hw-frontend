@@ -100,7 +100,16 @@
                   >
                     £{{ item?.price?.toFixed(2) }}
                   </div>
-                  <div class="rounded-card gbp-price text-white sub-item-outer">
+                  <div
+                    v-if="item?.code"
+                    class="rounded-card gbp-price text-white sub-item-outer"
+                  >
+                    £{{ getDiscountedDecimalAmount }}
+                  </div>
+                  <div
+                    v-else
+                    class="rounded-card gbp-price text-white sub-item-outer"
+                  >
                     £{{ getSalaryScaleDiscountedAmount }}
                   </div>
                 </div>
@@ -432,7 +441,7 @@ export default {
 @media (max-width: $laptopWidth) {
   .item-img {
     width: 110px;
-    aspect-ratio: 1/1;
+    aspect-ratio: 1;
   }
 }
 </style>

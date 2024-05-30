@@ -23,19 +23,21 @@
             v-if="
               enableSalaryScale &&
               !salaryScale &&
-              currentRouteName === 'iu-dashboard'
+              currentRouteName === 'iu-dashboard' &&
+              !$isTablet
             "
             class="discount-section"
             :key="$router?.currentRoute?.path"
           >
-            <span
-              >You may be entitled to course discounts based on affordability
-              criteria.&nbsp;&nbsp;<u
-                @click="openSalaryScaleDialog()"
-                class="cursor-pointer"
-                >Click here to learn more</u
-              ></span
-            >
+            <span>
+              <span>
+                You may be entitled to course discounts based on affordability
+                criteria.&nbsp;
+              </span>
+              <u @click="openSalaryScaleDialog()" class="cursor-pointer">
+                Click here
+              </u>
+            </span>
           </div>
         </template>
         <ul class="navbar-nav me-auto" />
@@ -149,7 +151,7 @@ export default {
   color: $static-white;
   font-weight: 600;
   text-align: center;
-  margin-left: 116px;
+  // margin-left: 116px;
   border-radius: 10px;
 }
 .welcome-user {

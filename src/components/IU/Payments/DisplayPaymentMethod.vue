@@ -23,10 +23,9 @@
         class="position-relative d-flex justify-content-center"
         :class="{ 'card-parent': !$isPhone }"
       >
-        <svg-card-bg class="no-card" />
+        <svg-card-bg class="card-available" />
         <div
-          class="position-absolute d-flex flex-column justify-content-center align-items-center"
-          :class="$isPhone ? 'mt-3' : 'mt-5'"
+          class="position-absolute top-50 start-50 translate-middle d-flex flex-column justify-content-center align-items-center"
         >
           <DisplayCardBrand
             class="d-flex flex-row-reverse col-12"
@@ -49,7 +48,7 @@
 <script>
 import DisplayCardBrand from "@/components/IU/Payments/DisplayCardBrand";
 import SvgNocard from "@/assets/svg/nocard.svg";
-import SvgCardBg from "@/assets/svg/card-bg.svg";
+import SvgCardBg from "@/assets/svg/card-back.svg";
 import devicesMixin from "@/mixins/Misc/devicesMixin";
 export default {
   mixins: [devicesMixin],
@@ -97,7 +96,7 @@ export default {
 }
 
 .card-parent {
-  padding: 3em 9em;
+  padding: 3em 8em;
 }
 
 .no-card {
@@ -108,9 +107,15 @@ export default {
 }
 .card-number {
   font-size: 3vw;
+  white-space: nowrap;
 }
 .small-card-number {
   font-size: 6vw;
   margin-top: 18px !important;
+  white-space: nowrap;
+}
+.card-available {
+  width: 100%;
+  border-radius: 20px;
 }
 </style>

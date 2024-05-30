@@ -1,45 +1,44 @@
 <template>
   <div class="container bg-white rounded-card-top bottom-border-gray">
-    <div class="row pt-3">
-      <div class="col-lg-3 px-4 pt-1">
+    <div class="row pt-3 pb-3">
+      <div class="col-md-2" :class="{ 'px-3': !$isTablet }">
         <img
           :src="book.img ? book.img : getDefaultImage()"
-          :class="[$isMobile ? '' : 'cover-img']"
-          class="w-100 h-100 rounded-card"
+          class="w-100 rounded-card cover-img"
           alt="book Preview Image"
           @error="handleImageError"
         />
       </div>
 
-      <div class="col-lg-9 mb-3 mb-lg-0 g-lg-0">
-        <div
-          class="d-lg-flex flex-lg-column justify-content-between rounded-card pt-3 pb-5 ps-2 pe-4 mt-3 mt-lg-0 ms-lg-2 h-100"
-          :class="{ 'mob-product-title': $isPhone }"
-        >
-          <div class="row justify-content-between">
+      <div class="col-md-10" :class="{ 'p-4': $isPhone }">
+        <div class="h-100" :class="{ 'mob-product-title': $isPhone }">
+          <div
+            class="d-md-flex flex-md-column rounded-card justify-content-center h-100"
+          >
             <h4
-              class="mt-3 col-lg-9 my-lg-auto text-center text-capitalize text-dark-gray text-lg-start font-weight-600 text-gray"
+              class="col-lg-12 text-capitalize text-dark-gray text-start font-weight-600 text-gray"
+              :class="{ 'fs-5': $isMobile && !$isPhone }"
             >
               {{ book.name }}
             </h4>
             <h4
               v-for="meta in book.productMetas"
               :key="meta.id"
-              class="col-lg-12 mt-1 text-center text-dark-gray text-lg-start author-name"
+              class="col-lg-12 mt-1 text-dark-gray text-start author-name"
             >
               <span class="text-blue font-weight-600">Author - </span
               ><span class="font-weight-500">{{ meta.meta_value }}</span>
             </h4>
-            <div class="row mt-4">
+            <div class="row mt-3">
               <span
-                class="col-2 font-weight-600 h5 text-primary pt-2"
-                :class="{ 'col-6': $isPhone }"
+                class="col-3 font-weight-600 h5 text-primary pt-2"
+                :class="{ 'col-5': $isPhone, 'col-4': $isTablet }"
               >
                 £{{ formattedPrice }}
               </span>
               <button
-                class="col-4 btn blue-btn rounded-pill text-uppercase font-weight-600 mb-2"
-                :class="{ 'col-6': $isPhone }"
+                class="col-5 btn blue-btn rounded-pill text-uppercase font-weight-600 mb-2"
+                :class="{ 'col-5': $isPhone }"
                 @click="onAddToCart(book)"
               >
                 Add to cart
@@ -50,8 +49,8 @@
       </div>
     </div>
 
-    <div class="row mt-5 px-4">
-      <div class="col-auto cursor-pointer text-center px-0 me-5 active">
+    <div class="row px-4">
+      <div class="col-auto cursor-pointer text-start px-0 me-5 active">
         <h5 class="font-weight-600 mb-1 text-dark-gray">Description</h5>
       </div>
     </div>
@@ -123,7 +122,7 @@ export default {
 }
 .cover-img {
   object-fit: cover;
-  height: 120px;
+  aspect-ratio: 1;
 }
 .mob-product-title {
   padding-right: 0px !important;

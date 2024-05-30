@@ -11,3 +11,14 @@ export function validateFileSize(
   const fileSizeInMB = file.size / 1024 / 1024; // Convert size to MB
   return fileSizeInMB >= minSizeInMB && fileSizeInMB <= maxSizeInMB;
 }
+
+export function validateFileAspectRatio(value) {
+  const img = new Image();
+  img.src = URL.createObjectURL(value);
+  return new Promise((resolve) => {
+    img.onload = () => {
+      const isValidDimensions = img.width === img.height;
+      resolve({ isValidDimensions });
+    };
+  });
+}

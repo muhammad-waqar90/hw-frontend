@@ -7,19 +7,23 @@
     </div>
 
     <div v-if="loading && courses.length == 0" class="py-md-3">
-      <LoadingAvailableCourse :number-of-items="$isMobile ? 1 : 2" />
+      <LoadingAvailableCourse :number-of-items="$isMobile ? 1 : 3" />
     </div>
 
     <section
       v-else-if="courses && courses.length"
       class="position-relative scrollbar-blue my-3 py-0 px-1"
-      :class="$isPhone ? 'row course-list' : 'grid overflow-visible'"
+      :class="$isPhone ? 'row course-list' : 'row overflow-visible'"
     >
       <div
         v-for="course in courses"
         :key="course.id"
-        class="mb-2 px-2"
-        :class="{ 'col-11': $isPhone }"
+        class="px-0 d-flex"
+        :class="{
+          'col-12 pe-2 mt-2': $isPhone,
+          'col-6 pe-3 mt-3': $isTablet,
+          'pe-3 col-4 mt-4': !$isPhone && !$isTablet,
+        }"
       >
         <CourseCard :type="type" :course="course" @add-to-cart="addToCart" />
       </div>

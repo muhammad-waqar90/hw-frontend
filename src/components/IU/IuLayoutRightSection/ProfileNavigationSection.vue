@@ -1,9 +1,15 @@
 <template>
-  <div class="h-100">
-    <div class="bg-white rounded-card py-2">
+  <div class="h-100" :class="{ 'px-3': $isTablet }">
+    <div
+      class="bg-white rounded-card py-2"
+      :class="{ 'row p-0 m-0': $isTablet }"
+    >
       <router-link
         :to="{ name: 'iu-certificates-dashboard' }"
-        :class="{ selected: currentRoute == 'iu-certificates-dashboard' }"
+        :class="{
+          selected: currentRoute == 'iu-certificates-dashboard',
+          'col-6': $isTablet,
+        }"
         class="d-block invisible-border text-decoration-none cursor-pointer py-1 my-1"
       >
         <span class="text-blue">
@@ -16,7 +22,10 @@
 
       <router-link
         :to="{ name: 'iu-card-payment' }"
-        :class="{ selected: currentRoute == 'iu-card-payment' }"
+        :class="{
+          selected: currentRoute == 'iu-card-payment',
+          'col-6': $isTablet,
+        }"
         class="d-block invisible-border text-decoration-none cursor-pointer py-1 my-1"
       >
         <span class="text-blue">
@@ -29,7 +38,10 @@
 
       <router-link
         :to="{ name: 'iu-card-history' }"
-        :class="{ selected: currentRoute == 'iu-card-history' }"
+        :class="{
+          selected: currentRoute == 'iu-card-history',
+          'col-6': $isTablet,
+        }"
         class="d-block invisible-border text-decoration-none cursor-pointer py-1 my-1"
       >
         <span class="text-blue">
@@ -42,7 +54,10 @@
 
       <router-link
         :to="{ name: 'iu-verification' }"
-        :class="{ selected: currentRoute == 'iu-verification' }"
+        :class="{
+          selected: currentRoute == 'iu-verification',
+          'col-6': $isTablet,
+        }"
         class="d-block invisible-border text-decoration-none cursor-pointer py-1 my-1"
       >
         <span class="text-blue">
@@ -55,7 +70,10 @@
 
       <router-link
         :to="{ name: 'iu-salary-scale-dashboard' }"
-        :class="{ selected: currentRoute == 'iu-salary-scale-dashboard' }"
+        :class="{
+          selected: currentRoute == 'iu-salary-scale-dashboard',
+          'col-6': $isTablet,
+        }"
         class="d-block invisible-border text-decoration-none cursor-pointer py-1 my-1"
       >
         <span class="text-blue">
@@ -68,7 +86,10 @@
 
       <router-link
         :to="{ name: 'iu-change-password' }"
-        :class="{ selected: currentRoute == 'iu-change-password' }"
+        :class="{
+          selected: currentRoute == 'iu-change-password',
+          'col-6': $isTablet,
+        }"
         class="d-block invisible-border text-decoration-none cursor-pointer py-1 my-1"
       >
         <span class="text-blue">
@@ -81,7 +102,10 @@
 
       <router-link
         :to="{ name: 'iu-delete-account' }"
-        :class="{ selected: currentRoute == 'iu-delete-account' }"
+        :class="{
+          selected: currentRoute == 'iu-delete-account',
+          'col-6': $isTablet,
+        }"
         class="d-block invisible-border text-decoration-none cursor-pointer py-1 my-1"
       >
         <span class="text-blue">
@@ -103,10 +127,11 @@ import SvgDocumentScanner from "@/assets/svg/document-scanner.svg";
 import SvgDelete from "@/assets/svg/delete.svg";
 import SvgSetting from "@/assets/svg/setting.svg";
 import SvgScale from "@/assets/svg/scale.svg";
+import devicesMixin from "@/mixins/Misc/devicesMixin";
 
 export default {
   name: "ProfileNavigationSection",
-
+  mixins: [devicesMixin],
   components: {
     SvgAchievement,
     SvgCreditCard,

@@ -2,38 +2,55 @@
   <div
     class="h-100 font-montserrat"
     :style="'width: 238px'"
-    :class="{ 'w-100 ': $isPhone }"
+    :class="{ 'w-100 mt-1': $isPhone || $isTablet }"
   >
-    <div v-if="!$isPhone" :style="{ 'padding-top': stickyHelper + 'px' }" />
+    <div
+      v-if="!$isPhone && !$isTablet"
+      :style="{ 'padding-top': stickyHelper + 'px' }"
+    />
     <div ref="sticky" class="position-sticky" :style="stickyStyle">
       <Observer
         :on-observed="onObserved"
         :custom-css="'bottom:unset;height:1px;top:-55px'"
       />
-      <div class="calendar-card">
+      <div :class="{ 'd-flex': $isTablet }">
         <div
-          class="top-calendar-title text-center pt-2 pb-1 font-weight-600 rounded-card-top"
+          class="calendar-card"
+          :class="{ 'calendar-card-tablet pe-3 col-6': $isTablet }"
         >
-          CALENDAR EVENTS
-        </div>
-        <Calendar :attributes="attrs" is-expanded class="pb-2 h-100 border-0" />
-        <div
-          class="bottom-calendar bg-white text-center rounded-card-bottom py-3"
-        >
-          <router-link
-            :to="{ name: 'iu-events' }"
-            class="btn blue-btn btn-font font-weight-600 rounded-pill px-4 py-1"
+          <div
+            class="top-calendar-title text-center pt-2 pb-1 font-weight-600 rounded-card-top align-content-center"
           >
-            SEE FULL CALENDAR
-          </router-link>
+            CALENDAR EVENTS
+          </div>
+          <Calendar
+            :attributes="attrs"
+            is-expanded
+            class="pb-2 h-100 border-0"
+          />
+          <div
+            class="bottom-calendar bg-white text-center rounded-card-bottom py-3 align-content-center"
+          >
+            <router-link
+              :to="{ name: 'iu-events' }"
+              class="btn blue-btn btn-font font-weight-600 rounded-pill px-4 py-1"
+            >
+              SEE FULL CALENDAR
+            </router-link>
+          </div>
+        </div>
+        <div :class="{ 'col-6 h-100 ps-3': $isTablet }">
+          <BookAdvert
+            :class="{
+              'advert-container-tablet': $isTablet,
+              'mt-3': !$isTablet,
+            }"
+          />
         </div>
       </div>
-      <div>
-        <BookAdvert class="mt-3" />
-      </div>
-      <div>
-        <Advert :ads="topAds" />
-        <Advert :ads="bottomAds" />
+      <div :class="{ 'd-flex pt-3': $isTablet }">
+        <Advert :ads="topAds" :class="{ 'col-6 pe-3': $isTablet }" />
+        <Advert :ads="bottomAds" :class="{ 'col-6 ps-3': $isTablet }" />
       </div>
       <Observer
         :on-observed="onObserved"
@@ -282,5 +299,11 @@ export default {
 }
 .btn-font {
   font-size: 12px;
+}
+.advert-container-tablet {
+  padding: 4px 75px 4px 75px !important;
+}
+.calendar-card-tablet {
+  display: grid;
 }
 </style>

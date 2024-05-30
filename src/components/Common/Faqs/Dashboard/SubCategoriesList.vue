@@ -1,5 +1,5 @@
 <template>
-  <div class="pb-3 scrollbar-blue overflow-y-auto outer pe-1">
+  <div class="pb-3 sub-category-list scrollbar-blue overflow-y-auto pe-1">
     <template v-if="parsedList.length">
       <div
         v-for="item in parsedList"
@@ -99,9 +99,6 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/sass/_variables.scss";
 
-.outer {
-  height: calc(100vh - 369px);
-}
 .subcategory {
   background: $lightgray;
 }
@@ -115,9 +112,8 @@ export default {
     border-radius: 50%;
   }
 }
-@media (max-width: $tabletWidth) {
-  .outer {
-    height: calc(100vh - 269px);
-  }
+.sub-category-list {
+  overflow-y: auto;
+  max-height: calc(100vh - 140px);
 }
 </style>

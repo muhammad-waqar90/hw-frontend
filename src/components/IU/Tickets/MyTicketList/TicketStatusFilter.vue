@@ -104,11 +104,14 @@ export default {
 
 @media (max-width: $laptopWidth) {
   .ticket-status-filter-outer {
-    overflow-x: scroll;
+    overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
-    justify-content: space-between;
+    justify-content: start !important;
+    .item {
+      margin-right: 4px;
+    }
   }
 }
 </style>

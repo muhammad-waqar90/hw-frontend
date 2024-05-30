@@ -183,11 +183,12 @@ export default {
   position: absolute;
   z-index: 1;
 }
+
 .mob-modal-container {
   width: 80% !important;
 }
 
 .tab-modal-container {
-  width: 50% !important;
+  width: 75% !important;
 }
 </style>

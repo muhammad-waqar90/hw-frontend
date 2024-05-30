@@ -224,6 +224,13 @@ export default {
   font-size: 14px;
   color: $blue;
 }
+.body-id {
+  white-space: nowrap;
+  padding-right: 10px;
+}
+.body-detail {
+  text-align: right;
+}
 .font-size-14 {
   font-size: 14px !important;
 }

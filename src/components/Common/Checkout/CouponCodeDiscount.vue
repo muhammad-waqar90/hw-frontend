@@ -234,7 +234,9 @@ export default {
             discountedAmount: this.apiObject.coupon.value,
             discountedType: this.apiObject.coupon.value_type,
             discountedPrice: this.calculateDiscount(
-              item.price,
+              item?.salaryScaleDiscount || item?.salaryScaleDiscount == 0
+                ? item?.salaryScaleDiscount
+                : item.price,
               this.apiObject.coupon.value,
               this.apiObject.coupon.value_type
             ),

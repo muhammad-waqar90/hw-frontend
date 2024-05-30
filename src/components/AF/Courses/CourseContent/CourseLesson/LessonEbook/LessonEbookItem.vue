@@ -93,16 +93,6 @@
         </div>
       </div>
     </div>
-    <div class="row mt-3 position-relative">
-      <div class="col-12">
-        <LessonEbookViewer
-          v-if="showEbookModal && ebook"
-          :ebook-data="ebook"
-          @ebook-error="closeEbookPreview"
-          @close-modal="closeEbookPreview"
-        />
-      </div>
-    </div>
   </div>
 </template>
 
@@ -119,7 +109,6 @@ import dompurifyMixin from "@/mixins/dompurifyMixin";
 import { validationMixin } from "vuelidate";
 import { required, maxLength, minLength } from "vuelidate/lib/validators";
 import { EBOOK_TYPES } from "@/dataObject/ebook/ebookData.js";
-import LessonEbookViewer from "@/components/Common/EbookPreview/LessonEbookViewer.vue";
 
 export default {
   name: "LessonEbookItem",
@@ -129,7 +118,6 @@ export default {
     Pen,
     Floppy,
     Close,
-    LessonEbookViewer,
   },
   mixins: [permissionsMixin, validationMixin, dompurifyMixin],
   props: {
@@ -152,7 +140,6 @@ export default {
       generalText,
       mode: this.ebook?.name ? "read" : "create",
       ebookS3Link: this.ebook?.name,
-      showEbookModal: false,
       EBOOK_TYPES,
     };
   },
@@ -184,7 +171,7 @@ export default {
       this.$store.dispatch("course/setHasEntityChanged", false);
     },
     onView() {
-      this.showEbookModal = true;
+      this.$emit("on-view");
     },
     onUpload() {
       this.$v.$touch();
@@ -196,9 +183,6 @@ export default {
     },
     onDelete() {
       this.$emit("on-start-deleting");
-    },
-    closeEbookPreview() {
-      this.showEbookModal = false;
     },
   },
 };

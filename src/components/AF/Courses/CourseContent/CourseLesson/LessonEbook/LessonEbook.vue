@@ -4,7 +4,7 @@
       <Information :size="22" />
       <div class="ms-2">
         Module E-Notes Collective Amount: £<b>{{
-          lessonEbookApi.data?.price.toFixed(2)
+          ebookData?.price?.toFixed(2)
         }}</b>
       </div>
     </div>
@@ -12,6 +12,7 @@
       :ebook="ebook ? ebook : {}"
       :is-submitting="lessonEbookApi.loading"
       :is-allow-delete="isAllowAddDelete"
+      @on-view="getEbook(1)"
       @on-upload="onUpload"
       @on-start-deleting="startDeleting"
     />
@@ -31,6 +32,17 @@
         />
       </template>
     </Modal>
+
+    <div class="row mt-3 position-relative">
+      <div class="col-12">
+        <LessonEbookViewer
+          v-if="modalMode == 'viewEbook' && ebook"
+          :ebook-data="ebook"
+          @ebook-error="closeModal"
+          @close-modal="closeModal"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -47,6 +59,7 @@ import {
 } from "@/services/AF/afLessonEbookService";
 import apiMixin, { getApiState } from "@/mixins/apiMixin";
 import { mapGetters } from "vuex";
+import LessonEbookViewer from "@/components/Common/EbookPreview/LessonEbookViewer.vue";
 
 export default {
   name: "LessonEbook",
@@ -55,6 +68,7 @@ export default {
     Modal,
     ConfirmationButtons,
     Information,
+    LessonEbookViewer,
   },
   mixins: [apiMixin],
   props: {
@@ -67,6 +81,7 @@ export default {
     return {
       modalMode: "",
       lessonEbookApi: getApiState(),
+      ebookData: {},
     };
   },
   computed: {
@@ -74,29 +89,33 @@ export default {
       isAllowAddDelete: "course/getIsAllowAddDelete",
     }),
     ebook() {
-      return Array.isArray(this.lessonEbookApi.data?.ebook)
-        ? this.lessonEbookApi.data?.ebook?.length
-        : this.lessonEbookApi.data?.ebook;
+      return Array.isArray(this.ebookData?.ebook)
+        ? this.ebookData?.ebook?.length
+        : this.ebookData?.ebook;
     },
   },
   watch: {
     lessonId() {
-      this.init();
+      this.getEbook();
     },
   },
   mounted() {
-    this.init();
+    this.getEbook();
   },
   methods: {
-    async init() {
+    async getEbook(withSrc = 0) {
       await this.$fetchApiData(this.lessonEbookApi, () =>
         getLessonEbook(
           this.courseId,
           this.levelId,
           this.courseModuleId,
-          this.lessonId
+          this.lessonId,
+          withSrc
         )
       );
+
+      this.ebookData = this.lessonEbookApi.data;
+      if (withSrc) this.modalMode = "viewEbook";
     },
     onUpload(content) {
       let formData = new FormData();
@@ -118,8 +137,7 @@ export default {
         )
       );
       if (this.lessonEbookApi.error) return;
-      this.$emit("reload");
-      this.init();
+      this.getEbook();
     },
     async updateEbook(ebookId, data) {
       await this.$postApiData(this.lessonEbookApi, () =>
@@ -133,7 +151,7 @@ export default {
         )
       );
       if (this.lessonEbookApi.error) return;
-      this.init();
+      this.getEbook();
     },
     startDeleting() {
       this.openModal("deleteEbook");
@@ -151,7 +169,7 @@ export default {
       if (this.lessonEbookApi.error) return;
       this.closeModal();
       this.$emit("reload");
-      this.init();
+      this.getEbook();
     },
     openModal(mode) {
       this.modalMode = mode;

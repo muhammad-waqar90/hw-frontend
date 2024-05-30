@@ -1,12 +1,19 @@
 <template>
   <article class="font-montserrat rounded-card bg-white mt-3 p-4">
-    <div class="d-flex justify-content-between pb-4">
+    <div
+      class="d-flex justify-content-between"
+      :class="$isPhone || $isTablet ? 'pb-2' : 'pb-4'"
+    >
       <h4 class="text-dark-gray font-weight-600 mb-0">
         {{ $t("iu.webShop.availableBooks") }}
       </h4>
-      <router-link v-if="books?.length" :to="{ name: 'iu-products-available' }">
+      <router-link
+        v-if="books?.length"
+        class="height-25"
+        :to="{ name: 'iu-products-available' }"
+      >
         <button
-          class="btn blue-btn btn-font font-weight-600 rounded-card h-100 px-3 py-0"
+          class="btn blue-btn btn-font font-weight-600 rounded-card h-100 px-3 py-0 word-break-normal"
         >
           ALL
         </button>
@@ -14,7 +21,7 @@
     </div>
 
     <div v-if="loading && books.length == 0" class="py-md-3 mr-1">
-      <LoadingAvailableBooks :number-of-items="$isMobile ? 1 : 3" />
+      <LoadingProduct />
     </div>
 
     <section
@@ -24,8 +31,12 @@
       <div
         v-for="book in books"
         :key="book.id"
-        class="px-0 pe-3 d-flex mt-4"
-        :class="$isPhone ? 'col-12' : 'col-4'"
+        class="px-0 d-flex"
+        :class="{
+          'col-12 pe-2 mt-2': $isPhone,
+          'col-6 pe-3 mt-3': $isTablet,
+          'pe-3 col-4 mt-4': !$isPhone && !$isTablet,
+        }"
       >
         <ProductCard type="default" :book="book" @add-to-cart="addToCart" />
       </div>
@@ -49,7 +60,7 @@
 
 <script>
 import ProductCard from "@/components/IU/Products/ProductCard.vue";
-import LoadingAvailableBooks from "@/components/IU/Products/LoadingAvailableBooks";
+import LoadingProduct from "@/components/IU/Products/LoadingProduct";
 import Observer from "@/components/Misc/Observer";
 
 import devicesMixin from "@/mixins/Misc/devicesMixin";
@@ -57,7 +68,7 @@ import devicesMixin from "@/mixins/Misc/devicesMixin";
 export default {
   components: {
     ProductCard,
-    LoadingAvailableBooks,
+    LoadingProduct,
     Observer,
   },
   mixins: [devicesMixin],
@@ -105,6 +116,6 @@ export default {
 }
 .product-list {
   overflow-y: auto;
-  height: calc(100vh - 200px);
+  max-height: calc(100vh - 195px);
 }
 </style>

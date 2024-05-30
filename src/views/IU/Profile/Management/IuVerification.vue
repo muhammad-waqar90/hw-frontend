@@ -1,6 +1,6 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
-  <div class="container font-montserrat px-3">
+  <div class="container font-montserrat" :class="$isPhone ? 'px-0' : 'px-3'">
     <div class="row">
       <div class="col">
         <div class="bg-white rounded-card">

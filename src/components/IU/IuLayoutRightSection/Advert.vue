@@ -11,7 +11,8 @@
     >
       <a v-for="ad in ads" :key="ad.id" :href="ad.url" target="_blank">
         <img
-          class="advert-img rounded-card mt-3"
+          class="advert-img rounded-card"
+          :class="$isTablet ? 'mt-1' : 'mt-3'"
           :src="ad.img ? ad.img : getDefaultImage()"
           @error="handleImageError"
         />
@@ -23,6 +24,7 @@
 <script>
 import Carousel from "vue-owl-carousel";
 import { handleImageError, getDefaultImage } from "@/utils/imageUtils";
+import devicesMixin from "@/mixins/Misc/devicesMixin";
 export default {
   name: "Advert",
 
@@ -40,6 +42,7 @@ export default {
       default: 3000,
     },
   },
+  mixins: [devicesMixin],
   methods: {
     handleImageError,
     getDefaultImage,
@@ -50,6 +53,6 @@ export default {
 <style lang="scss" scoped>
 .advert-img {
   object-fit: cover;
-  height: 200px;
+  aspect-ratio: 1;
 }
 </style>

@@ -96,7 +96,7 @@
             </div>
             <InputImageWithPreview
               v-if="hasInitialized"
-              :label="'Image (optional, max:10MB, jpeg, jpg, png, gif):'"
+              :label="'Image (optional, max:10MB, jpeg, jpg, png, gif, image ratio should be 1:1):'"
               :image-preview="imgPreview"
               :error="$v.image.$error"
               @on-image="handleImage"
@@ -147,7 +147,10 @@ import {
 } from "vuelidate/lib/validators";
 import { GLOBAL, NATIONAL } from "@/dataObject/event/eventData";
 import InputImageWithPreview from "@/components/AF/InputImageWithPreview.vue";
-import { validateFileSize } from "@/utils/validationUtils.js";
+import {
+  validateFileAspectRatio,
+  validateFileSize,
+} from "@/utils/validationUtils.js";
 import { MAX_FILE_SIZE } from "@/dataObject/AF/fileSizeData.js";
 
 export default {
@@ -207,6 +210,15 @@ export default {
         isFileValid: (value) => {
           if (value == null) return true;
           return validateFileSize(value, MAX_FILE_SIZE.event);
+        },
+        isAspectRatioValid: (value) => {
+          if (value == null) return true;
+          return (
+            value != null &&
+            validateFileAspectRatio(value).then((result) => {
+              return !!result.isValidDimensions;
+            })
+          );
         },
       },
       startDate: {

@@ -78,7 +78,8 @@
           v-else-if="!$v.selectedFile.isFileValid"
           class="form-text text-danger error"
         >
-          {{ errors.invalidFileSize }}
+          {{ errors.file.size }}
+          {{ maxFileSize.bulkImport }}MB
         </small>
       </template>
     </div>
@@ -89,7 +90,7 @@
 <script>
 import FormActionButtons from "@/components/Misc/Forms/FormActionButtons.vue";
 import { validateFileSize } from "@/utils/validationUtils.js";
-import { MAX_FILE_SIZE } from "@/dataObject/AF/fileSizeData.js";
+import { MAX_FILE_SIZE as maxFileSize } from "@/dataObject/AF/fileSizeData.js";
 import { validationMixin } from "vuelidate";
 import {
   required,
@@ -121,6 +122,7 @@ export default {
       price: "",
       selectedFile: null,
       errors,
+      maxFileSize,
     };
   },
   validations() {
@@ -165,7 +167,7 @@ export default {
             : false;
         },
         isFileValid: (value) => {
-          return validateFileSize(value, MAX_FILE_SIZE.bulkImport);
+          return validateFileSize(value, maxFileSize.bulkImport);
         },
       },
     };
@@ -186,7 +188,9 @@ export default {
       this.$refs.fileUpload.click();
     },
     storeFileTemp(e) {
-      this.selectedFile = e.target.files[0];
+      if (!e.target?.files[0]) return;
+
+      this.selectedFile = e.target?.files[0];
       this.$v.selectedFile.$touch();
     },
     onSubmit() {

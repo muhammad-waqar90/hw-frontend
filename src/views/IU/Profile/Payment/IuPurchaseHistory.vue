@@ -2,7 +2,7 @@
   <div>
     <div
       :class="{
-        'purchase-container scrollbar-blue-white-bg mx-3': $isPhone,
+        'purchase-container scrollbar-blue-white-bg': $isPhone,
       }"
     >
       <div

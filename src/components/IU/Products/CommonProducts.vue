@@ -17,7 +17,12 @@
       <div
         v-for="book in books"
         :key="book.id"
-        class="col-4 px-0 pe-3 d-flex mt-4"
+        class="px-0 d-flex"
+        :class="{
+          'col-12 pe-2 mt-2': $isPhone,
+          'col-6 pe-3 mt-3': $isTablet,
+          'pe-3 col-4 mt-4': !$isPhone && !$isTablet,
+        }"
       >
         <ProductCard type="default" :book="book" @add-to-cart="addToCart" />
       </div>
@@ -109,7 +114,7 @@ export default {
 
 .product-list {
   overflow-y: auto;
-  height: calc(100vh - 200px);
+  max-height: calc(100vh - 195px);
 }
 .grid {
   display: grid;

@@ -3,8 +3,8 @@
     <div class="logoHolder w-100">
       <div class="d-flex justify-content-center my-2 my-md-4">
         <img
-          class="logo"
-          :src="darkMode ? '/img/dark-logo.png' : '/img/logo.png'"
+          class="logo bg-static-white rounded-card px-3 py-2"
+          :src="'/img/logo.png'"
           alt=""
         />
       </div>
@@ -46,19 +46,10 @@
 import { accountRestoreService } from "@/services/authService";
 import toastMixin from "@/mixins/toastMixin";
 import devicesMixin from "@/mixins/Misc/devicesMixin";
-import { mapGetters } from "vuex";
 
 export default {
   name: "RestoreAccount",
   mixins: [toastMixin, devicesMixin],
-  computed: {
-    darkMode() {
-      return this.theme == "night-mode" ? true : false;
-    },
-    ...mapGetters({
-      theme: "theme/getThemeMode",
-    }),
-  },
   methods: {
     async restoreAccount() {
       const response = await accountRestoreService({

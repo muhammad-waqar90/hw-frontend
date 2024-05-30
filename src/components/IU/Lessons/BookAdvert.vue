@@ -1,6 +1,7 @@
 <template>
   <div
     class="col-12 d-flex flex-column justify-content-between book-advert bg-white rounded-card p-3"
+    :class="{ 'h-auto': $isPhone || $isTablet }"
   >
     <div class="row">
       <div class="col-12">
@@ -36,6 +37,14 @@
   </div>
 </template>
 
+<script>
+import devicesMixin from "@/mixins/Misc/devicesMixin";
+
+export default {
+  mixins: [devicesMixin],
+};
+</script>
+
 <style scoped lang="scss">
 @import "@/assets/sass/_variables.scss";
 
@@ -49,11 +58,5 @@ p {
 
 .book-btn {
   font-size: 12px;
-}
-
-@media (max-width: $laptopWidth) {
-  .book-advert {
-    height: auto;
-  }
 }
 </style>

@@ -1,19 +1,23 @@
 <template>
   <section
-    class="row flex-md-row card-bg enrolled-course rounded-card cursor-pointer m-0 me-4 py-3"
+    class="row flex-md-row card-bg rounded-card cursor-pointer m-0 py-3"
+    :class="$isPhone ? 'me-3' : 'me-4'"
     @click.self="$router.push({ name: 'iu-course', params: { id: course.id } })"
   >
     <div
-      class="col-12 col-md-4 d-flex flex-column justify-content-between align-items-center img-container-height"
-      :class="$isPhone ? 'height-65' : 'h-100'"
+      class="col-12 col-md-4 d-flex flex-column justify-content-between align-items-center"
     >
-      <img
-        :src="course.img ? course.img : getDefaultImage()"
-        class="card-img-top"
-        alt="Image Preview"
-        @error="handleImageError"
-        @click="$router.push({ name: 'iu-course', params: { id: course.id } })"
-      />
+      <div class="img-wrapper">
+        <img
+          :src="course.img ? course.img : getDefaultImage()"
+          class="card-img-top"
+          alt="Image Preview"
+          @error="handleImageError"
+          @click="
+            $router.push({ name: 'iu-course', params: { id: course.id } })
+          "
+        />
+      </div>
       <div :class="btnCursorWrapper" class="w-100">
         <ButtonWithLoading
           :class="[btnColor]"
@@ -41,7 +45,7 @@
       class="col-12 col-md-8 pt-2 text-dark-gray d-flex flex-column justify-content-between"
       @click="$router.push({ name: 'iu-course', params: { id: course.id } })"
     >
-      <div class="text-center text-capitalize text-md-start">
+      <div class="text-capitalize text-start">
         <h5 class="font-weight-600 course-name">
           {{ course.name }}
         </h5>
@@ -164,7 +168,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  height: 46px;
+  height: 45px;
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -198,6 +202,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
+  height: 36px;
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -205,33 +210,14 @@ export default {
 .card-img-top {
   object-fit: cover;
   border-radius: 20px;
-  height: calc(100% - 45px);
+  aspect-ratio: 1;
 }
-
-.img-container-height {
-  height: 100%;
-}
-.height-65 {
-  height: 65% !important;
-}
-
-.enrolled-course {
-  height: 190px;
+.img-wrapper {
+  width: 100%;
+  padding-bottom: 10px;
 }
 
 .disabled-opacity {
   opacity: 1;
-}
-
-@media (max-width: $tabletWidth) {
-  .enrolled-course {
-    height: 450px;
-  }
-  .card {
-    width: 12rem;
-    img {
-      height: 150px;
-    }
-  }
 }
 </style>

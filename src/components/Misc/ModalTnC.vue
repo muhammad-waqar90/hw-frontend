@@ -2,7 +2,14 @@
   <transition v-if="rendered" name="modal">
     <div v-show="shouldShow" class="modal-mask">
       <div class="modal-wrapper">
-        <div v-click-outside="onClickOutside" class="modal-container">
+        <div
+          v-click-outside="onClickOutside"
+          class="modal-container"
+          :class="{
+            'mob-modal-container': $isPhone,
+            'tab-modal-container': $isTablet,
+          }"
+        >
           <div class="position-relative">
             <close
               v-if="!hideCloseButton"
@@ -34,6 +41,7 @@
 
 <script>
 import Close from "vue-material-design-icons/Close";
+import devicesMixin from "@/mixins/Misc/devicesMixin";
 export default {
   components: {
     Close,
@@ -68,6 +76,7 @@ export default {
       default: false,
     },
   },
+  mixins: [devicesMixin],
   data() {
     return {
       rendered: false,
@@ -188,15 +197,11 @@ export default {
   }
 }
 
-@media only screen and (max-width: $bigPhoneWidth) {
-  .modal-container {
-    width: 90%;
-  }
+.mob-modal-container {
+  width: 80% !important;
 }
 
-@media only screen and (min-width: $laptopWidth) {
-  .modal-container {
-    width: 800px;
-  }
+.tab-modal-container {
+  width: 75% !important;
 }
 </style>

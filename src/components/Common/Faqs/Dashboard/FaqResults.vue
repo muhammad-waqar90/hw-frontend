@@ -1,12 +1,14 @@
 <template>
-  <div class="rounded-card text-dark-gray py-4 bg-white px-4">
+  <div
+    class="rounded-card text-dark-gray py-4 bg-white px-4 w-100 faq-results-list"
+  >
     <div>
       <h4 class="color-gray">
         {{ $t("iu.faqs.frequentlyAskedQuestions") }}
       </h4>
       <hr />
     </div>
-    <div ref="faqResultsList" class="faq-results-list">
+    <div ref="faqResultsList">
       <template v-if="mode == availableModes.INITIAL">
         {{ $t("iu.faqs.initialDesc") }}
       </template>
@@ -40,7 +42,6 @@
 <script>
 import FaqList from "@/components/Common/Faqs/Dashboard/FaqList";
 import SubCategoriesList from "@/components/Common/Faqs/Dashboard/SubCategoriesList";
-
 import * as availableModes from "@/dataObject/faqs/iuFaqDashboardModes";
 
 export default {
@@ -107,10 +108,7 @@ export default {
 .keyword {
   color: $blue;
 }
-
-@media (min-width: $tabletWidth) {
-  .faq-results-list {
-    height: calc(100vh - 318px);
-  }
+.faq-results-list {
+  min-height: 100vh;
 }
 </style>

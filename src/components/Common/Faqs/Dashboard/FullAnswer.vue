@@ -1,7 +1,7 @@
 <template>
   <div
     class="flex-shrink-1 rounded-card button text-center text-uppercase py-1 px-4"
-    :class="$isPhone ? 'col-0' : 'col-4'"
+    :class="$isPhone || $isTablet ? 'col-0' : 'col-4'"
   >
     <span>
       {{ $t("iu.faqs.seeFullAnswer") }}

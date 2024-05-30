@@ -6,13 +6,13 @@
       class="container font-montserrat mt-3 px-0 px-sm-3"
     >
       <div class="row">
-        <div :class="$isPhone ? 'left-part-mob' : 'left-part'">
+        <div :class="$isPhone || $isTablet ? 'left-part-mob' : 'left-part'">
           <div
             class="bg-white rounded-card-top p-4"
-            :class="{ 'rounded-card-bottom': $isPhone }"
+            :class="{ 'rounded-card-bottom': $isPhone || $isTablet }"
           >
             <div class="row">
-              <div class="col-7" :class="{ 'w-100 ': $isPhone }">
+              <div class="col-7" :class="{ 'w-100 ': $isPhone || $isTablet }">
                 <h4 class="font-weight-600 text-capitalize text-dark-gray mb-0">
                   {{ lesson.name }}
                 </h4>
@@ -27,7 +27,7 @@
                 class="col-5 align-self-center"
                 :class="[
                   { 'not-available-opacity': !hasEbookAccess },
-                  { 'w-100 ': $isPhone },
+                  { 'w-100 ': $isPhone || $isTablet },
                 ]"
               >
                 <ButtonWithLoading
@@ -77,7 +77,7 @@
 
         <div
           class="right-part d-flex"
-          :class="{ 'right-part-mob mt-3': $isPhone }"
+          :class="{ 'right-part-mob mt-3': $isPhone || $isTablet }"
         >
           <div class="col-12 d-flex flex-column bg-white rounded-card p-3 pt-4">
             <div class="row pt-1 mb-2">
@@ -122,14 +122,17 @@
 
       <div v-if="!loadingCourseLesson">
         <div class="row">
-          <div :class="$isPhone ? 'left-part-mob mt-3' : 'left-part'">
+          <div
+            :class="$isPhone || $isTablet ? 'left-part-mob mt-3' : 'left-part'"
+          >
             <div
               :key="tab"
               class="col-12 bg-lightgray d-flex flex-column h-100 rounded-card-bottom"
+              :class="{ 'rounded-card-top': $isPhone || $isTablet }"
             >
               <div
                 class="row g-0 px-4 bg-white bottom-border-gray text-black"
-                :class="{ 'tabs-head': $isPhone }"
+                :class="{ 'tabs-head rounded-card-top': $isPhone || $isTablet }"
               >
                 <div
                   class="col-auto cursor-pointer text-center position-relative px-0 me-5"
@@ -181,9 +184,18 @@
           </div> -->
           </div>
 
-          <div class="mt-3" :class="{ 'right-part mx-auto': !$isPhone }">
+          <div
+            class="mt-3"
+            :class="{
+              'right-part mx-auto': !$isPhone && !$isTablet,
+              'd-flex justify-content-center': $isTablet,
+            }"
+          >
             <!-- todo: need to check that emit is required? Also two components with name BookAdvert.vue needed to be a single generic component -->
-            <BookAdvert @handle-ebook-click="handleEbookClick" />
+            <BookAdvert
+              :class="{ 'w-50': $isTablet }"
+              @handle-ebook-click="handleEbookClick"
+            />
           </div>
         </div>
       </div>

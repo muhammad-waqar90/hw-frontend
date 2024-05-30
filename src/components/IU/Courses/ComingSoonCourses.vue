@@ -1,18 +1,16 @@
 <template>
   <article class="font-montserrat rounded-card bg-white py-3">
     <div class="d-flex justify-content-between pt-3 pb-md-2 mb-2">
-      <h4
-        class="text-dark-gray font-weight-600 mb-0 px-3 px-md-4"
-        :class="{ 'h6 ': $isPhone }"
-      >
+      <h4 class="text-dark-gray font-weight-600 mb-0 px-3 px-md-4">
         {{ $t("iu.course.upcomingCourses") }}
       </h4>
       <router-link
         :to="{ name: 'iu-courses-coming-soon' }"
+        class="height-25"
         :class="{ 'disabled-link': !courses?.length }"
       >
         <button
-          class="btn blue-btn btn-font font-weight-600 rounded-card h-100 px-3 py-0 mx-4"
+          class="btn blue-btn btn-font font-weight-600 rounded-card h-100 px-3 py-0 mx-4 word-break-normal"
         >
           ALL
         </button>
@@ -29,6 +27,7 @@
         :dots="false"
         :nav="false"
         :mouse-drag="false"
+        :key="itemsCount"
       >
         <template slot="prev">
           <div class="nav-btn shadow-sm prev">
@@ -86,7 +85,7 @@ export default {
   },
   computed: {
     itemsCount() {
-      return this.$isPhone ? 1 : 3;
+      return this.$isPhone ? 1 : this.$isTablet ? 2 : 3;
     },
   },
 };

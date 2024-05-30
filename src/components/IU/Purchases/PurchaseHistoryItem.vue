@@ -17,7 +17,7 @@
       <div class="text-center col-2">
         {{ item.entity_type }}
       </div>
-      <div class="text-end col-2">
+      <div class="text-end col-2" :class="{ 'text-nowrap': $isTablet }">
         {{ formattedDate }}
       </div>
       <div class="text-end col-2 cursor-pointer" @click="toggleExpanded">

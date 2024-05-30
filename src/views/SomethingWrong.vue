@@ -1,10 +1,12 @@
 <template>
-  <div class="container px-0 my-2 font-montserrat">
+  <div class="container px-0 my-2 font-montserrat margin-top-70">
     <PageBackButton @on-back="$router.go(-1)" />
     <div
       class="bg-white rounded-card d-flex justify-content-center align-items-center flex-column px-5 pt-5"
     >
-      <h1 class="text-404">OOPS!</h1>
+      <h1 class="text-404" :class="{ 'small-text-404': $isPhone || $isTablet }">
+        OOPS!
+      </h1>
       <hr class="w-50 mt-0 mb-5" />
       <h2 class="color-blue font-weight-600">SOMETHING WENT WRONG</h2>
       <p>
@@ -24,12 +26,14 @@
 <script>
 import SvgBottomHijazLogo from "@/assets/svg/bottomHijazLogo.svg";
 import PageBackButton from "@/components/Misc/BackButtons/PageBackButton";
+import devicesMixin from "@/mixins/Misc/devicesMixin";
 export default {
   name: "SomethingWrong",
   components: {
     SvgBottomHijazLogo,
     PageBackButton,
   },
+  mixins: [devicesMixin],
   methods: {
     onCreateTicketClick() {
       this.handleRedirect("iu-ticket-dashboard");
@@ -57,6 +61,12 @@ p {
   color: #bac7d9;
 }
 
+.small-text-404 {
+  font-size: 80px;
+  font-weight: 700;
+  color: #bac7d9;
+}
+
 .color-blue {
   color: $blue;
 }
@@ -68,5 +78,9 @@ p {
 
 .btn-text {
   font-size: 12px;
+}
+
+.margin-top-70 {
+  margin-top: 70px !important;
 }
 </style>

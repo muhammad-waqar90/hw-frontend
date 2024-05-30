@@ -5,14 +5,9 @@
     <div class="container px-3">
       <router-link
         :to="{ name: 'homepage' }"
-        class="navbar-brand mb-0 h1 fw-bold subtle-link"
+        class="bg-static-white navbar-brand h1 fw-bold subtle-link"
       >
-        <img
-          :src="darkMode ? '/img/dark-logo.png' : '/img/logo.png'"
-          width="30"
-          height="30"
-          alt="Hijaz World"
-        />
+        <img src="/img/logo.png" width="30" height="30" alt="Hijaz World" />
       </router-link>
       <ul class="navbar-nav me-auto" />
       <ToggleDayNightMode class="me-3" />
@@ -38,20 +33,11 @@
 <script>
 import CartNav from "@/components/Navigation/CartNav";
 import ToggleDayNightMode from "@/components/Misc/ToggleDayNightMode.vue";
-import { mapGetters } from "vuex";
 
 export default {
   components: {
     CartNav,
     ToggleDayNightMode,
-  },
-  computed: {
-    darkMode() {
-      return this.theme == "night-mode" ? true : false;
-    },
-    ...mapGetters({
-      theme: "theme/getThemeMode",
-    }),
   },
 };
 </script>
@@ -78,7 +64,11 @@ export default {
 
 .navbar-brand {
   margin: 0;
-
+  position: relative;
+  bottom: 4px;
+  line-height: 44px;
+  padding: 0.5rem;
+  border-radius: 0px 0px 20px 20px;
   img {
     width: 90px;
     height: 40px;

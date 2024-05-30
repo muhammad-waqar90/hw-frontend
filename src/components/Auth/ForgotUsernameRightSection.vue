@@ -109,7 +109,7 @@ export default {
 @media (max-width: $desktopWidth) {
   .forgotUsernameRightSection {
     .rememberedUsername {
-      font-size: 2.3rem;
+      font-size: 2.1rem;
       margin: 10px 0 !important;
     }
   }
